@@ -133,6 +133,7 @@ body {
   -webkit-flex-wrap: wrap;
   justify-content: center;
   -webkit-justify-content: center;
+  padding: 20px 5%;
 }
 .card {
   display: flex;
@@ -159,4 +160,23 @@ body {
 }
 .site-title {
   text-align: center;
+}
+
+@media (max-width: 980px) {
+  .flex-grid .card {
+    width: 31%;
+  }
+}
+
+@media (max-width: 780px) {
+  .flex-grid .card {
+    width: 48%;
+  }
+}
+
+@media (max-width: 580px) {
+  .flex-grid .card {
+    width: 100%;
+    margin: 1% 0;
+  }
 }
