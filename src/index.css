@@ -1,10 +1,135 @@
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
 body {
   margin: 0;
   padding: 0;
   background: #e2e1e0;
   font-family: sans-serif;
 }
-.pokeapp {
+.app {
+}
+.header {
+  text-align: center;
+  position: relative;
+}
+.header__home-link {
+  height: 70px;
+  width: 70px;
+  background-color: #fff;
+  border-right: 1px solid #95989a;
+  border-bottom: 1px solid #95989a;
+  border-bottom-right-radius: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.header__home-link svg {
+  width: 35px;
+  height: 35px;
+  stroke: #333;
+}
+.header__logo {
+  background-color: #fff;
+  border-bottom: 1px solid #95989a;
+  padding: 10px 0;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.header__logo img {
+  width: 150px;
+  height: auto;
+}
+.header__menu {
+  height: 70px;
+  width: 70px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  border-left: 1px solid #95989a;
+  border-bottom: 1px solid #95989a;
+  border-bottom-left-radius: 5px;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.header__menu svg {
+  width: 35px;
+  height: 35px;
+}
+.home {
+  display: flex;
+  display: -webkit-flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.home__main {
+  flex: 1 1 0;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.home__logo {
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.home__logo img {
+  max-width: 400px;
+  min-height: 50vh;
+  margin: 0 auto;
+}
+.home__search {
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  align-self: flex-end;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.home__search label {
+  margin-right: 10px;
+}
+.home__search input {
+  border-radius: 5px;
+  outline: 0;
+  border: 1px solid #7a7a7b;
+  padding: 10px 5px;
+}
+.main {
   padding: 16px;
 }
 .pokemon--species--list {

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PokemonList from './PokemonList';
+import Header from './Header';
 
-class PokeApp extends Component {
+class AllPokemon extends Component {
   render() {
     return (
-      <div className="pokeapp">
+      <div className="AllPokemon">
+        <Header />
         <h1>The Kanto Pokedex!</h1>
         <PokemonList />
       </div>
@@ -12,4 +14,4 @@ class PokeApp extends Component {
   }
 }
 
-export default PokeApp;
+export default AllPokemon;
