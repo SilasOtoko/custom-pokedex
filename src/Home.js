@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './index.css';
 import Header from './Header';
 
@@ -12,9 +13,10 @@ class Home extends Component {
             <img src={require('./images/pokedex-logo-stacked.svg')} alt="Pokedex Logo" />
           </div>
         </div>
-        <div className="home__search">
-          <label>Begin Search</label>
-          <input type="text" placeholder="search" />
+        <div className="home__search-link">
+          <Link exact to="/allpokemon" className="button">
+            Begin
+          </Link>
         </div>
       </div>
     );

@@ -31,7 +31,7 @@ class PokemonList extends Component {
     let content;
     if (fetched) {
       content = (
-        <div className="pokemon--species--list">
+        <div className="flex-grid">
           {species.map((pokemon, index) => (
             <Pokemon key={pokemon.name} id={index + 1} pokemon={pokemon} />
           ))}

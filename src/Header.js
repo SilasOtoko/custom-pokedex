@@ -8,7 +8,7 @@ class Header extends Component {
     return (
       <header className="header">
         <div className="header__home-link">
-          <Link to="/">
+          <Link exact to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -28,27 +28,24 @@ class Header extends Component {
         <div className="header__logo">
           <img src={require('./images/pokedex-logo.svg')} alt="Pokedex Logo" />
         </div>
-        <div className="header__menu">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            class="feather feather-menu"
-          >
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-          <div className="header_menu-dropdown">
-            <Link to="/">Home</Link>
-            <Link to="/allpokemon">All Pokemon</Link>
-          </div>
+        <div className="header__search">
+          <Link exact to="/allpokemon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-search"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </Link>
         </div>
       </header>
     );

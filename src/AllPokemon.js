@@ -7,7 +7,7 @@ class AllPokemon extends Component {
     return (
       <div className="AllPokemon">
         <Header />
-        <h1>The Kanto Pokedex!</h1>
+        <h1 className="site-title">The Kanto Pokedex!</h1>
         <PokemonList />
       </div>
     );
