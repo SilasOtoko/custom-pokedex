@@ -14,7 +14,7 @@ class Home extends Component {
           </div>
         </div>
         <div className="home__search-link">
-          <Link exact to="/allpokemon" className="button">
+          <Link exact="true" to="/allpokemon" className="button">
             Begin
           </Link>
         </div>

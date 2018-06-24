@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather:400|Open+Sans');
+
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -15,7 +17,20 @@ body {
   margin: 0;
   padding: 0;
   background: #e2e1e0;
-  font-family: sans-serif;
+  color: #95989a;
+  font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Merriweather', serif;
+  font-weight: 400;
+  color: #666;
 }
 .app {
 }
@@ -142,6 +157,9 @@ body {
   -webkit-align-items: center;
   flex-direction: column;
   -webkit-flex-direction: column;
+  justify-content: center;
+  -webkit-justify-content: center;
+  min-height: 240px;
   width: 22%;
   margin: 1%;
   padding: 8px;
@@ -149,6 +167,15 @@ body {
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  position: relative;
+}
+
+.card__name h3 {
+  text-transform: capitalize;
+}
+
+.pokemon-name {
+  text-transform: capitalize;
 }
 
 .button {
@@ -158,8 +185,69 @@ body {
   color: #fff;
   text-decoration: none;
 }
+.button--small {
+  padding: 5px 10px;
+  min-width: 100px;
+  text-align: center;
+}
+.button--blue {
+  background-color: #4b83a9;
+}
 .site-title {
   text-align: center;
+  margin-top: 40px;
+}
+.card__number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 80px;
+  text-align: center;
+  color: #fff;
+  background-color: #666;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.pokemon-info {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  height: 100vh;
+}
+.pokemon-info__sprite {
+  height: 50vh;
+  display: flex;
+  display: -wekbit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.pokemon-info__sprite img {
+  width: 180px;
+}
+.pokemon-info__details {
+  background-color: #fff;
+  position: relative;
+  border-top: 1px solid #95989a;
+  padding: 0 5%;
+  flex-grow: 1;
+}
+.pokemon-info__number {
+  position: absolute;
+  top: -21px;
+  left: 5%;
+  background-color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 80px;
+  text-align: center;
+  border: 1px solid #95989a;
+  border-bottom: 0;
+  font-family: 'Merriweather', serif;
 }
 
 @media (max-width: 980px) {

@@ -6,7 +6,7 @@ class PokemonList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      species: [],
+      pokemon: [],
       fetched: false,
       loading: false
     };
@@ -19,7 +19,7 @@ class PokemonList extends Component {
       .then(res => res.json())
       .then(response => {
         this.setState({
-          species: response.results,
+          pokemon: response.results,
           loading: true,
           fetched: true
         });
@@ -27,12 +27,12 @@ class PokemonList extends Component {
   }
 
   render() {
-    const { fetched, loading, species } = this.state;
+    const { fetched, loading, pokemon } = this.state;
     let content;
     if (fetched) {
       content = (
         <div className="flex-grid">
-          {species.map((pokemon, index) => (
+          {pokemon.map((pokemon, index) => (
             <Pokemon key={pokemon.name} id={index + 1} pokemon={pokemon} />
           ))}
         </div>

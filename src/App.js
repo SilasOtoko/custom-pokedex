@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
-import Header from './Header';
 import Home from './Home';
 import AllPokemon from './AllPokemon';
+import PokemonDetails from './PokemonDetails';
 
 class App extends Component {
   render() {
@@ -12,6 +11,7 @@ class App extends Component {
       <div className="app">
         <Route exact path="/" component={Home} />
         <Route exact path="/allpokemon" component={AllPokemon} />
+        <Route exact path={`/pokemon/:pokemonId`} component={PokemonDetails} />
       </div>
     );
   }

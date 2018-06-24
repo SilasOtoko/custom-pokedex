@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { Route, Link, Switch } from 'react-router-dom';
-import Home from './Home';
-import AllPokemon from './AllPokemon';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
   render() {
     return (
       <header className="header">
         <div className="header__home-link">
-          <Link exact to="/">
+          <Link exact="true" to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -29,7 +27,7 @@ class Header extends Component {
           <img src={require('./images/pokedex-logo.svg')} alt="Pokedex Logo" />
         </div>
         <div className="header__search">
-          <Link exact to="/allpokemon">
+          <Link exact="true" to="/allpokemon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -37,10 +35,10 @@ class Header extends Component {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-search"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-search"
             >
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
