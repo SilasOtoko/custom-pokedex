@@ -250,6 +250,27 @@ h6 {
   font-family: 'Merriweather', serif;
 }
 
+.button--back {
+  background-color: #9d9b9b;
+  margin: 40px 0 0 5%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  width: 100px;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.button--back svg {
+  width: 20px;
+  fill: #fff;
+  margin-right: 5px;
+}
+
 @media (max-width: 980px) {
   .flex-grid .card {
     width: 31%;
