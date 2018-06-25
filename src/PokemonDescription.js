@@ -32,8 +32,9 @@ class PokemonDescription extends Component {
     const { loading, fetched, species } = this.state;
     let content;
     if (fetched) {
-      console.log(species.flavor_text_entries[1].flavor_text);
-      content = <p>{species.flavor_text_entries[1].flavor_text}</p>;
+      var text = species.flavor_text_entries.find(item => item.language.name == 'en');
+      console.log(text.flavor_text);
+      content = <p>{text.flavor_text}</p>;
     } else if (loading && !fetched) {
       content = <h2>Loading...</h2>;
     }
