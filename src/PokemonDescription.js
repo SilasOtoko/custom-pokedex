@@ -30,12 +30,10 @@ class PokemonDescription extends Component {
     const { loading, fetched, species } = this.state;
     let content;
     if (fetched) {
-      var text = species.flavor_text_entries.find(item => item.language.name == 'en');
+      var text = species.flavor_text_entries.find(item => item.language.name === 'en');
       content = (
         <div>
           <p>{text.flavor_text}</p>
-          <h4>Evolves From: </h4>
-          <p>{species.evolves_from_species.name}</p>
         </div>
       );
     } else if (loading && !fetched) {

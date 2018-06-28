@@ -4,8 +4,6 @@ import Header from './Header';
 import { pad } from './helpers';
 import PokemonDescription from './PokemonDescription';
 
-import map from 'lodash/map';
-
 class PokemonDetails extends Component {
   constructor() {
     super();
@@ -33,21 +31,11 @@ class PokemonDetails extends Component {
       .catch(err => console.log(err));
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { singlePokemon } = this.state;
-    if (singlePokemon !== prevState.singlePokemon) {
-      console.log('update singlePokemon!');
-    }
-  }
-
   render() {
     const { loading, fetched, singlePokemon } = this.state;
     let content;
     if (fetched) {
-      {
-        console.log(this.state.singlePokemon.types[0].type.name);
-      }
-      const typeList = this.state.singlePokemon.types.map(item => (
+      const typeList = singlePokemon.types.map(item => (
         <li key={item.type.name}>{item.type.name}</li>
       ));
       content = (
@@ -61,15 +49,13 @@ class PokemonDetails extends Component {
             <span>Back</span>
           </Link>
           <div className="pokemon-info__sprite">
-            <img src={this.state.singlePokemon.sprites.front_default} />
+            <img src={singlePokemon.sprites.front_default} alt={singlePokemon.name} />
           </div>
           <div className="pokemon-info__details">
-            <span className="pokemon-info__number">
-              {pad(this.state.singlePokemon.id, 3)}
-            </span>
-            <h1 className="pokemon-name">{this.state.singlePokemon.name}</h1>
+            <span className="pokemon-info__number">{pad(singlePokemon.id, 3)}</span>
+            <h1 className="pokemon-name">{singlePokemon.name}</h1>
             <ul className="pokemon-info__types">{typeList}</ul>
-            <PokemonDescription pokemon={this.state.singlePokemon.name} />
+            <PokemonDescription pokemon={singlePokemon.name} />
           </div>
         </div>
       );

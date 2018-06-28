@@ -11,8 +11,6 @@ class PokemonList extends Component {
       fetched: false,
       loading: false
     };
-
-    this.updateResults = this.updateResults.bind(this);
   }
   componentWillMount() {
     this.setState({
@@ -29,32 +27,21 @@ class PokemonList extends Component {
       });
   }
 
-  handleSearchTermChange = (
-    event: SyntheticKeyboardEvent & { target: HTMLInputElement }
-  ) => {
+  changeSearchTerm = event => {
     this.setState({ searchTerm: event.target.value });
-    this.updateResults();
   };
 
-  updateResults() {
-    const filteredList = this.state.pokemonList.filter(
-      pokemon =>
-        pokemon.name.toUpperCase().indexOf(this.state.searchTerm.toUpperCase()) >= 0
-    );
-    console.log(this.state.searchTerm);
-    this.setState({
-      pokemonList: filteredList
-    });
-  }
-
   render() {
-    const { fetched, loading, pokemonList } = this.state;
+    const { fetched, loading, pokemonList, searchTerm } = this.state;
+    const filteredList = pokemonList.filter(pokemon =>
+      pokemon.name.toUpperCase().includes(searchTerm.toUpperCase())
+    );
     let content;
     if (fetched) {
       content = (
         <div className="flex-grid">
-          {pokemonList.map((pokemon, index) => (
-            <Pokemon key={pokemon.name} id={index + 1} pokemon={pokemon} />
+          {filteredList.map((pokemon, index) => (
+            <Pokemon key={pokemon.name} id={pokemon.name} pokemon={pokemon} />
           ))}
         </div>
       );
@@ -67,7 +54,7 @@ class PokemonList extends Component {
       <div>
         <div className="search-box">
           <input
-            onChange={this.handleSearchTermChange}
+            onChange={this.changeSearchTerm}
             value={this.state.searchTerm}
             type="text"
             placeholder="Search"
