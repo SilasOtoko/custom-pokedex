@@ -32,10 +32,24 @@ class PokemonDetails extends Component {
       })
       .catch(err => console.log(err));
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { singlePokemon } = this.state;
+    if (singlePokemon !== prevState.singlePokemon) {
+      console.log('update singlePokemon!');
+    }
+  }
+
   render() {
     const { loading, fetched, singlePokemon } = this.state;
     let content;
     if (fetched) {
+      {
+        console.log(this.state.singlePokemon.types[0].type.name);
+      }
+      const typeList = this.state.singlePokemon.types.map(item => (
+        <li key={item.type.name}>{item.type.name}</li>
+      ));
       content = (
         <div className="pokemon-info">
           <Link exact="true" to="/allpokemon" className="button button--back">
@@ -54,6 +68,7 @@ class PokemonDetails extends Component {
               {pad(this.state.singlePokemon.id, 3)}
             </span>
             <h1 className="pokemon-name">{this.state.singlePokemon.name}</h1>
+            <ul className="pokemon-info__types">{typeList}</ul>
             <PokemonDescription pokemon={this.state.singlePokemon.name} />
           </div>
         </div>

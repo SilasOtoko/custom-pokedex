@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import map from 'lodash/map';
-
 class PokemonDescription extends Component {
   constructor() {
     super();
@@ -33,8 +31,13 @@ class PokemonDescription extends Component {
     let content;
     if (fetched) {
       var text = species.flavor_text_entries.find(item => item.language.name == 'en');
-      console.log(text.flavor_text);
-      content = <p>{text.flavor_text}</p>;
+      content = (
+        <div>
+          <p>{text.flavor_text}</p>
+          <h4>Evolves From: </h4>
+          <p>{species.evolves_from_species.name}</p>
+        </div>
+      );
     } else if (loading && !fetched) {
       content = <h2>Loading...</h2>;
     }

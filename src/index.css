@@ -17,7 +17,7 @@ body {
   margin: 0;
   padding: 0;
   background: #e2e1e0;
-  color: #95989a;
+  color: #666;
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -30,7 +30,7 @@ h5,
 h6 {
   font-family: 'Merriweather', serif;
   font-weight: 400;
-  color: #666;
+  color: #444;
 }
 .app {
 }
@@ -159,19 +159,24 @@ h6 {
   -webkit-flex-direction: column;
   justify-content: center;
   -webkit-justify-content: center;
-  min-height: 240px;
-  width: 22%;
-  margin: 1%;
+  width: 30%;
+  margin: 2%;
   padding: 8px;
   background: white;
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   position: relative;
+  text-decoration: none;
 }
 
 .card__name h3 {
   text-transform: capitalize;
+  margin: 0;
+}
+
+.card__sprite {
+  padding-top: 50px;
 }
 
 .pokemon-name {
@@ -203,7 +208,8 @@ h6 {
   left: 0;
   right: 0;
   margin: 0 auto;
-  width: 80px;
+  padding: 5px 0;
+  width: 100px;
   text-align: center;
   color: #fff;
   background-color: #666;
@@ -250,6 +256,21 @@ h6 {
   font-family: 'Merriweather', serif;
 }
 
+.pokemon-info__types {
+  padding: 0;
+}
+
+.pokemon-info__types li {
+  list-style: none;
+  border-radius: 10px;
+  border: 1px solid #333;
+  display: inline-block;
+  margin-right: 10px;
+  padding: 2px 20px;
+  min-width: 100px;
+  text-align: center;
+}
+
 .button--back {
   background-color: #9d9b9b;
   margin: 40px 0 0 5%;
@@ -273,7 +294,7 @@ h6 {
 
 @media (max-width: 980px) {
   .flex-grid .card {
-    width: 31%;
+    width: 28%;
   }
 }
 
@@ -287,5 +308,17 @@ h6 {
   .flex-grid .card {
     width: 100%;
     margin: 1% 0;
+  }
+}
+
+@supports (display: grid) {
+  .flex-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+    grid-gap: 20px;
+  }
+  .flex-grid .card {
+    width: 200px;
+    margin: 0;
   }
 }
