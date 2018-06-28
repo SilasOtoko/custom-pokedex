@@ -10,16 +10,26 @@ class PokemonDetails extends Component {
 
     this.state = {
       singlePokemon: {},
+      allPokemon: [],
+      searchTerm: '',
       fetched: false,
       loading: false
     };
+
+    this.getPokemon = this.getPokemon.bind(this);
+    this.setSearchTerm = this.setSearchTerm.bind(this);
+    this.getAllPokemon = this.getAllPokemon.bind(this);
   }
 
   componentDidMount() {
     this.setState({
       loading: true
     });
-    fetch(this.props.location.state.pokemon.url)
+    this.getPokemon(this.props.location.state.pokemon.name);
+  }
+
+  getPokemon(parameter) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${parameter}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -31,8 +41,30 @@ class PokemonDetails extends Component {
       .catch(err => console.log(err));
   }
 
+  getAllPokemon() {
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+      .then(res => res.json())
+      .then(response => {
+        this.setState({
+          allPokemon: response.results,
+          loading: true,
+          fetched: true
+        });
+      });
+  }
+
+  changeSearchTerm = event => {
+    this.setState({ searchTerm: event.target.value });
+  };
+
+  setSearchTerm(event) {
+    event.preventDefault();
+    const renderedTerm = this.state.searchTerm.toLowerCase();
+    return this.getPokemon(renderedTerm);
+  }
+
   render() {
-    const { loading, fetched, singlePokemon } = this.state;
+    const { loading, fetched, singlePokemon, searchTerm, allPokemon } = this.state;
     let content;
     if (fetched) {
       const typeList = singlePokemon.types.map(item => (
@@ -48,11 +80,22 @@ class PokemonDetails extends Component {
             </svg>
             <span>Back</span>
           </Link>
+          <div className="search-box">
+            <form onSubmit={this.setSearchTerm}>
+              <input
+                onChange={this.changeSearchTerm}
+                value={this.state.searchTerm}
+                type="text"
+                placeholder="Search For Pokemon"
+              />
+              <button type="submit">Search</button>
+            </form>
+          </div>
           <div className="pokemon-info__sprite">
             <img src={singlePokemon.sprites.front_default} alt={singlePokemon.name} />
           </div>
           <div className="pokemon-info__details">
-            <span className="pokemon-info__number">{pad(singlePokemon.id, 3)}</span>
+            <span className="pokemon-info__number">#{pad(singlePokemon.id, 3)}</span>
             <h1 className="pokemon-name">{singlePokemon.name}</h1>
             <ul className="pokemon-info__types">{typeList}</ul>
             <PokemonDescription pokemon={singlePokemon.name} />

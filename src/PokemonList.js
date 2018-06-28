@@ -6,8 +6,7 @@ class PokemonList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pokemonList: [],
-      searchTerm: '',
+      allPokemon: [],
       fetched: false,
       loading: false
     };
@@ -20,28 +19,26 @@ class PokemonList extends Component {
       .then(res => res.json())
       .then(response => {
         this.setState({
-          pokemonList: response.results,
+          allPokemon: response.results,
           loading: true,
           fetched: true
         });
       });
   }
 
-  changeSearchTerm = event => {
-    this.setState({ searchTerm: event.target.value });
-  };
-
   render() {
-    const { fetched, loading, pokemonList, searchTerm } = this.state;
-    const filteredList = pokemonList.filter(pokemon =>
-      pokemon.name.toUpperCase().includes(searchTerm.toUpperCase())
-    );
+    const { fetched, loading, allPokemon } = this.state;
     let content;
     if (fetched) {
       content = (
         <div className="flex-grid">
-          {filteredList.map((pokemon, index) => (
-            <Pokemon key={pokemon.name} id={pokemon.name} pokemon={pokemon} />
+          {allPokemon.map((pokemon, index) => (
+            <Pokemon
+              key={pokemon.name}
+              id={index + 1}
+              pokemon={pokemon}
+              allPokemon={allPokemon}
+            />
           ))}
         </div>
       );
@@ -50,19 +47,7 @@ class PokemonList extends Component {
     } else {
       content = <div />;
     }
-    return (
-      <div>
-        <div className="search-box">
-          <input
-            onChange={this.changeSearchTerm}
-            value={this.state.searchTerm}
-            type="text"
-            placeholder="Search"
-          />
-        </div>
-        {content}
-      </div>
-    );
+    return <div>{content}</div>;
   }
 }
 
