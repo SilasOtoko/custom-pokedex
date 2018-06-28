@@ -292,6 +292,18 @@ h6 {
   margin-right: 5px;
 }
 
+.search-box {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.search-box input {
+  padding: 10px 5px;
+  border-radius: 10px;
+  border: 0;
+  min-width: 200px;
+}
+
 @media (max-width: 980px) {
   .flex-grid .card {
     width: 28%;

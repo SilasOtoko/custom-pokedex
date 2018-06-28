@@ -65,12 +65,14 @@ class PokemonList extends Component {
     }
     return (
       <div>
-        <input
-          onChange={this.handleSearchTermChange}
-          value={this.state.searchTerm}
-          type="text"
-          placeholder="Search"
-        />
+        <div className="search-box">
+          <input
+            onChange={this.handleSearchTermChange}
+            value={this.state.searchTerm}
+            type="text"
+            placeholder="Search"
+          />
+        </div>
         {content}
       </div>
     );
