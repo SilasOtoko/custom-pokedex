@@ -73,6 +73,7 @@ class PokemonDetails extends Component {
       const abilities = singlePokemon.abilities.map(item => (
         <li key={item.ability.name}>{item.ability.name}</li>
       ));
+      let paddedId = pad(singlePokemon.id, 3);
       content = (
         <div className="pokemon-info">
           <Link exact="true" to="/allpokemon" className="button button--back">
@@ -95,7 +96,10 @@ class PokemonDetails extends Component {
             </form>
           </div>
           <div className="pokemon-info__sprite">
-            <img src={singlePokemon.sprites.front_default} alt={singlePokemon.name} />
+            <img
+              src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${paddedId}.png`}
+              alt={singlePokemon.name}
+            />
           </div>
           <div className="pokemon-info__details">
             <span className="pokemon-info__number">#{pad(singlePokemon.id, 3)}</span>

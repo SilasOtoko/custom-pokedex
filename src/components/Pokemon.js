@@ -6,6 +6,7 @@ import '../css/pokemon.css';
 class Pokemon extends Component {
   render() {
     const { pokemon, id } = this.props;
+    let paddedId = pad(id, 3);
 
     return (
       <Link
@@ -13,9 +14,12 @@ class Pokemon extends Component {
         exact="true"
         to={{ pathname: `/pokemon/${id}`, state: { pokemon } }}
       >
-        <div className="card__number">#{pad(id, 3)}</div>
+        <div className="card__number">#{paddedId}</div>
         <div className="card__sprite">
-          <img src={require(`../../public/sprites/${id}.png`)} alt=" " />
+          <img
+            src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${paddedId}.png`}
+            alt=" "
+          />
         </div>
         <div className="card__name">
           <h3 className="capitalize">{pokemon.name}</h3>
