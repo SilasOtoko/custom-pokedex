@@ -80,6 +80,15 @@
     width: auto;
     margin: 0;
   }
+  @media (max-width: 580px) {
+    .flex-grid {
+      display: block;
+    }
+    .flex-grid .card {
+      width: 100%;
+      margin: 20px 0 40px;
+    }
+  }
 }
 
 .pokemon-info {
@@ -90,7 +99,7 @@
   height: 100vh;
 }
 .pokemon-info__sprite {
-  height: 50vh;
+  height: 200px;
   flex-shrink: 0;
   display: flex;
   display: -wekbit-flex;
@@ -106,7 +115,7 @@
   background-color: #fff;
   position: relative;
   border-top: 1px solid #95989a;
-  padding: 0 5%;
+  padding: 0 5% 40px;
   flex-grow: 1;
 }
 .pokemon-info__number {
