@@ -73,11 +73,11 @@
 @supports (display: grid) {
   .flex-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 260px));
     grid-gap: 20px;
   }
   .flex-grid .card {
-    width: 200px;
+    width: auto;
     margin: 0;
   }
 }
