@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './index.css';
+import '../css/index.css';
+import '../css/home.css';
 import Header from './Header';
 
 class Home extends Component {
@@ -10,7 +11,7 @@ class Home extends Component {
         <Header />
         <div className="home__main">
           <div className="home__logo">
-            <img src={require('./images/pokedex-logo-stacked.svg')} alt="Pokedex Logo" />
+            <img src={require('../images/pokedex-logo-stacked.svg')} alt="Pokedex Logo" />
           </div>
         </div>
         <div className="home__search-link">

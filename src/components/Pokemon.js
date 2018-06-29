@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { pad } from './helpers';
+import { pad } from '../helpers';
+import '../css/pokemon.css';
 
 class Pokemon extends Component {
   render() {
@@ -14,10 +15,10 @@ class Pokemon extends Component {
       >
         <div className="card__number">#{pad(id, 3)}</div>
         <div className="card__sprite">
-          <img src={require(`../public/sprites/${id}.png`)} alt=" " />
+          <img src={require(`../../public/sprites/${id}.png`)} alt=" " />
         </div>
         <div className="card__name">
-          <h3>{pokemon.name}</h3>
+          <h3 className="capitalize">{pokemon.name}</h3>
         </div>
       </Link>
     );

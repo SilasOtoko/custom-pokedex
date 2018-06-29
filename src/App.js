@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import './App.css';
-import Home from './Home';
-import PokemonList from './PokemonList';
-import PokemonDetails from './PokemonDetails';
+import './css/App.css';
+import Home from './components/Home';
+import PokemonList from './components/PokemonList';
+import PokemonDetails from './components/PokemonDetails';
 
 class App extends Component {
   constructor(props) {

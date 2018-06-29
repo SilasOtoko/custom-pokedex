@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import '../css/header.css';
 
 class Header extends Component {
   render() {
@@ -24,7 +25,7 @@ class Header extends Component {
           </Link>
         </div>
         <div className="header__logo">
-          <img src={require('./images/pokedex-logo.svg')} alt="Pokedex Logo" />
+          <img src={require('../images/pokedex-logo.svg')} alt="Pokedex Logo" />
         </div>
         <div className="header__search">
           <Link exact="true" to="/allpokemon">

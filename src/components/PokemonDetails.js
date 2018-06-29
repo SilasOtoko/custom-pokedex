@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
-import { pad } from './helpers';
+import { pad } from '../helpers';
 import PokemonDescription from './PokemonDescription';
 
 class PokemonDetails extends Component {
@@ -70,6 +70,9 @@ class PokemonDetails extends Component {
       const typeList = singlePokemon.types.map(item => (
         <li key={item.type.name}>{item.type.name}</li>
       ));
+      const abilities = singlePokemon.abilities.map(item => (
+        <li key={item.ability.name}>{item.ability.name}</li>
+      ));
       content = (
         <div className="pokemon-info">
           <Link exact="true" to="/allpokemon" className="button button--back">
@@ -96,9 +99,17 @@ class PokemonDetails extends Component {
           </div>
           <div className="pokemon-info__details">
             <span className="pokemon-info__number">#{pad(singlePokemon.id, 3)}</span>
-            <h1 className="pokemon-name">{singlePokemon.name}</h1>
+            <h1 className="pokemon-info__name capitalize">{singlePokemon.name}</h1>
             <ul className="pokemon-info__types">{typeList}</ul>
             <PokemonDescription pokemon={singlePokemon.name} />
+            <div className="pokemon-info__attributes">
+              <h3>Height</h3>
+              <span>{singlePokemon.height}</span>
+              <h3>Weight</h3>
+              <span>{singlePokemon.weight}</span>
+              <h3>Abilities</h3>
+              <ul>{abilities}</ul>
+            </div>
           </div>
         </div>
       );
