@@ -1,53 +1,49 @@
 import React, { Component } from 'react';
-
+import Header from './Header';
 import Pokemon from './Pokemon';
 
 class PokemonList extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
     this.state = {
-      allPokemon: [],
-      fetched: false,
-      loading: false
+      allPokemon: {},
+      fetched: false
     };
   }
-  componentWillMount() {
-    this.setState({
-      loading: true
-    });
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-      .then(res => res.json())
-      .then(response => {
-        this.setState({
-          allPokemon: response.results,
-          loading: true,
-          fetched: true
-        });
+
+  componentDidMount() {
+    const { allPokemon } = this.props;
+    if (allPokemon !== undefined) {
+      this.setState({
+        allPokemon: allPokemon,
+        fetched: true
       });
+    }
   }
 
   render() {
-    const { fetched, loading, allPokemon } = this.state;
-    let content;
+    let { allPokemon, fetched } = this.state;
+    let pokemonList;
     if (fetched) {
-      content = (
-        <div className="flex-grid">
-          {allPokemon.map((pokemon, index) => (
-            <Pokemon
-              key={pokemon.name}
-              id={index + 1}
-              pokemon={pokemon}
-              allPokemon={allPokemon}
-            />
-          ))}
-        </div>
-      );
-    } else if (loading && !fetched) {
-      content = <p> Loading ...</p>;
+      pokemonList = allPokemon.map((pokemon, index) => (
+        <Pokemon
+          key={pokemon.name}
+          id={index + 1}
+          pokemon={pokemon}
+          allPokemon={allPokemon}
+        />
+      ));
     } else {
-      content = <div />;
+      pokemonList = null;
     }
-    return <div>{content}</div>;
+    return (
+      <div>
+        <Header />
+        <h1 className="site-title">The Kanto Pokedex!</h1>
+        <div className="flex-grid">{pokemonList}</div>
+      </div>
+    );
   }
 }
 
