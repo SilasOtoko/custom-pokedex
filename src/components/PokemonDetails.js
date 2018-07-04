@@ -11,14 +11,15 @@ class PokemonDetails extends Component {
     this.state = {
       singlePokemon: {},
       allPokemon: [],
+      searchResults: [],
       searchTerm: '',
       fetched: false,
       loading: false
     };
 
     this.getPokemon = this.getPokemon.bind(this);
-    this.setSearchTerm = this.setSearchTerm.bind(this);
     this.getAllPokemon = this.getAllPokemon.bind(this);
+    this.searchPokemon = this.searchPokemon.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +39,9 @@ class PokemonDetails extends Component {
           fetched: true
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err)
+      });
   }
 
   getAllPokemon() {
@@ -53,47 +56,71 @@ class PokemonDetails extends Component {
       });
   }
 
-  changeSearchTerm = event => {
-    this.setState({ searchTerm: event.target.value });
-  };
-
-  setSearchTerm(event) {
-    event.preventDefault();
-    const renderedTerm = this.state.searchTerm.toLowerCase();
-    return this.getPokemon(renderedTerm);
+  searchPokemon() {
+    var query = this.state.searchTerm;
+    let list = [];
+    fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
+      .then(res => res.json())
+      .then(response => {
+        list = response.results;
+        let count = 0;
+        let filteredList = list.filter(pokemon => {
+          return pokemon.name.toLowerCase().indexOf(this.state.searchTerm) != -1;
+        });
+        let limitList = filteredList.slice(0,7)
+        this.setState({
+          searchResults: limitList
+        });
+      });
   }
 
+  changeSearchTerm = event => {
+    const term = event.target.value.toLowerCase();
+    this.setState({
+      searchTerm: term}, () => this.searchPokemon());
+  };
+
   render() {
-    const { loading, fetched, singlePokemon, searchTerm, allPokemon } = this.state;
+    const { loading, fetched, singlePokemon, searchResults, searchTerm, allPokemon } = this.state;
     let content;
     if (fetched) {
       const typeList = singlePokemon.types.map(item => (
         <li key={item.type.name}>{item.type.name}</li>
       ));
       const abilities = singlePokemon.abilities.map(item => (
-        <li key={item.ability.name}>{item.ability.name}</li>
+        <li key={item.ability.name} className="capitalize">{item.ability.name}</li>
+      ));
+      console.log(searchResults);
+      const pokemonMatches = searchResults.map(pokemon => (
+        <li key={pokemon.name} className="capitalize">{pokemon.name}</li>
       ));
       let paddedId = pad(singlePokemon.id, 3);
       content = (
         <div className="pokemon-info">
-          <Link exact="true" to="/allpokemon" className="button button--back">
-            <svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 40 40">
-              <path d="M17.1,34.1c-0.7,0-1.4-0.7-1.6-0.8C15.1,32.9,2,23.1,0.6,21.7c-0.5-0.5-0.6-1-0.6-1.4c0-0.8,0.7-1.4,0.8-1.5l14.5-12
-  c0.2-0.2,0.9-0.9,1.6-0.9c0.3,0,1.1,0.1,1.1,1.5v6.2h20.5c0.1,0,0.1,0,0.2,0c0.2,0,1.4,0.1,1.4,1.9v9.5c0,1.3-0.9,1.7-1.4,1.7H18.3
-  v5.7C18.3,33.9,17.6,34.1,17.1,34.1L17.1,34.1z M17.1,32.9v0.6V32.9z" />
-            </svg>
-            <span>Back</span>
-          </Link>
-          <div className="search-box">
-            <form onSubmit={this.setSearchTerm}>
-              <input
-                onChange={this.changeSearchTerm}
-                value={this.state.searchTerm}
-                type="text"
-                placeholder="Search For Pokemon"
-              />
-              <button type="submit">Search</button>
-            </form>
+          <div className="pokemon-info__navigation">
+            <div>
+              <Link exact="true" to="/allpokemon" className="button button--back">
+                <svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 40 40">
+                  <path d="M17.1,34.1c-0.7,0-1.4-0.7-1.6-0.8C15.1,32.9,2,23.1,0.6,21.7c-0.5-0.5-0.6-1-0.6-1.4c0-0.8,0.7-1.4,0.8-1.5l14.5-12
+      c0.2-0.2,0.9-0.9,1.6-0.9c0.3,0,1.1,0.1,1.1,1.5v6.2h20.5c0.1,0,0.1,0,0.2,0c0.2,0,1.4,0.1,1.4,1.9v9.5c0,1.3-0.9,1.7-1.4,1.7H18.3
+      v5.7C18.3,33.9,17.6,34.1,17.1,34.1L17.1,34.1z M17.1,32.9v0.6V32.9z" />
+                </svg>
+                <span>Back</span>
+              </Link>
+            </div>
+            <div className="search-box">
+              <div>
+                <input
+                    onChange={this.changeSearchTerm}
+                    value={this.state.searchTerm}
+                    type="text"
+                    placeholder="Search For Pokemon"
+                  />
+              </div>
+              <div>
+                <ul>{pokemonMatches}</ul>
+              </div>
+            </div>
           </div>
           <div className="pokemon-info__sprite">
             <img
