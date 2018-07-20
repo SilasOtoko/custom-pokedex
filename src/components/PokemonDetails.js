@@ -20,6 +20,8 @@ class PokemonDetails extends Component {
     this.getPokemon = this.getPokemon.bind(this);
     this.getAllPokemon = this.getAllPokemon.bind(this);
     this.searchPokemon = this.searchPokemon.bind(this);
+    this.changeSearchTerm = this.changeSearchTerm.bind(this);
+    this.getSelectedPokemon = this.getSelectedPokemon.bind(this);
   }
 
   componentDidMount() {
@@ -74,11 +76,19 @@ class PokemonDetails extends Component {
       });
   }
 
-  changeSearchTerm = event => {
+  changeSearchTerm(event) {
     const term = event.target.value.toLowerCase();
     this.setState({
       searchTerm: term}, () => this.searchPokemon());
   };
+
+  getSelectedPokemon(event) {
+    const term = event.target.value.toLowerCase();
+    this.setState({
+      searchTerm: '',
+      searchResults: []
+    }, () => this.getPokemon(term));
+  }
 
   render() {
     const { loading, fetched, singlePokemon, searchResults, searchTerm, allPokemon } = this.state;
@@ -92,7 +102,9 @@ class PokemonDetails extends Component {
       ));
       console.log(searchResults);
       const pokemonMatches = searchResults.map(pokemon => (
-        <li key={pokemon.name} className="capitalize">{pokemon.name}</li>
+        <li key={pokemon.name} className="capitalize">
+          <button value={pokemon.name} onClick={this.getSelectedPokemon}>{pokemon.name}</button>
+        </li>
       ));
       let paddedId = pad(singlePokemon.id, 3);
       content = (
@@ -116,9 +128,9 @@ class PokemonDetails extends Component {
                     type="text"
                     placeholder="Search For Pokemon"
                   />
-              </div>
-              <div>
-                <ul>{pokemonMatches}</ul>
+                <div className="search-box__dropdown">
+                  <ul>{pokemonMatches}</ul>
+                </div>
               </div>
             </div>
           </div>
