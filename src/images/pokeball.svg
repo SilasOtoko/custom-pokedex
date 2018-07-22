@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Pokeball" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 195 196" style="enable-background:new 0 0 195 196;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#CE2121;stroke:#000000;stroke-width:7;stroke-miterlimit:10;}
+	.st1{fill:#FFFFFF;stroke:#000000;stroke-width:7;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#000000;stroke-width:12;stroke-miterlimit:10;}
+</style>
+<title>pokeball</title>
+<g>
+	<path class="st0" d="M97.5,7.8C47.3,7.8,6.7,48.5,6.7,98.6h181.7C188.4,48.5,147.7,7.8,97.5,7.8z"/>
+	<path class="st1" d="M6.7,98.6c0,50.2,40.7,90.8,90.8,90.8s90.8-40.7,90.8-90.8H6.7z"/>
+	<circle class="st1" cx="97.5" cy="98.6" r="28.9"/>
+	<circle class="st2" cx="97.3" cy="98.6" r="18.7"/>
+</g>
+<g>
+	<line class="st3" x1="6.7" y1="99" x2="68.6" y2="99"/>
+	<line class="st3" x1="126.4" y1="98.2" x2="188.3" y2="98.2"/>
+</g>
+</svg>

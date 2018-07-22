@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from './Header';
 import { pad } from '../helpers';
 import PokemonDescription from './PokemonDescription';
+import '../css/spinner.css';
 
 class PokemonDetails extends Component {
   constructor() {
@@ -157,7 +158,7 @@ class PokemonDetails extends Component {
         </div>
       );
     } else if (loading && !fetched) {
-      content = <h2>Loading...</h2>;
+      content = <div className="spinner"><img src={require('../images/pokeball.svg')} alt="Pokedex Logo" /></div>;
     }
     return (
       <div>

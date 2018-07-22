@@ -1,0 +1,25 @@
+.spinner {
+	width: 100%;
+	border-radius: 50%;
+	position: relative;
+	display: inline-block;
+	animation: spin 1s linear infinite;
+	margin: 100px auto;
+	text-align: center;
+	transform-origin: 50% 50%;
+}
+
+.spinner img {
+	display: block;
+	width: 100px;
+	margin: 0 auto;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

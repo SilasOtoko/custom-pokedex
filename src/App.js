@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import './css/App.css';
+import './css/spinner.css';
 import Home from './components/Home';
 import PokemonList from './components/PokemonList';
 import PokemonDetails from './components/PokemonDetails';
@@ -53,7 +54,7 @@ class App extends Component {
       content = (
         <div>
           <Route exact path="/" component={Home} />
-          <p> Loading ...</p>
+          <div className="spinner"><img src={require('./images/pokeball.svg')} alt="Pokedex Logo" /></div>
         </div>
       );
     } else {
