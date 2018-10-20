@@ -6,12 +6,11 @@ import PokemonDescription from './PokemonDescription';
 import '../css/spinner.css';
 
 class PokemonDetails extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       singlePokemon: {},
-      allPokemon: [],
       searchResults: [],
       searchTerm: '',
       fetched: false,
@@ -19,7 +18,6 @@ class PokemonDetails extends Component {
     };
 
     this.getPokemon = this.getPokemon.bind(this);
-    this.getAllPokemon = this.getAllPokemon.bind(this);
     this.searchPokemon = this.searchPokemon.bind(this);
     this.changeSearchTerm = this.changeSearchTerm.bind(this);
     this.getSelectedPokemon = this.getSelectedPokemon.bind(this);
@@ -29,11 +27,11 @@ class PokemonDetails extends Component {
     this.setState({
       loading: true
     });
-    this.getPokemon(this.props.location.state.pokemon.name);
+    this.getPokemon(this.props.match.params.id);
   }
 
   getPokemon(parameter) {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${parameter}`)
+    fetch(`http://pokeapi.salestock.net/api/v2/pokemon/${parameter}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -47,34 +45,16 @@ class PokemonDetails extends Component {
       });
   }
 
-  getAllPokemon() {
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-      .then(res => res.json())
-      .then(response => {
-        this.setState({
-          allPokemon: response.results,
-          loading: true,
-          fetched: true
-        });
-      });
-  }
-
   searchPokemon() {
     var query = this.state.searchTerm;
-    let list = [];
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
-      .then(res => res.json())
-      .then(response => {
-        list = response.results;
-        let count = 0;
-        let filteredList = list.filter(pokemon => {
-          return pokemon.name.toLowerCase().indexOf(this.state.searchTerm) != -1;
-        });
-        let limitList = filteredList.slice(0,7)
-        this.setState({
-          searchResults: limitList
-        });
-      });
+    const allPokemon = this.props.allPokemon;
+    let filteredList = allPokemon.filter(pokemon => {
+      return pokemon.name.toLowerCase().indexOf(query) !== -1;
+    });
+    let limitList = filteredList.slice(0,7);
+    this.setState({
+      searchResults: limitList
+    });
   }
 
   changeSearchTerm(event) {
@@ -92,7 +72,7 @@ class PokemonDetails extends Component {
   }
 
   render() {
-    const { loading, fetched, singlePokemon, searchResults, searchTerm, allPokemon } = this.state;
+    const { loading, fetched, singlePokemon, searchResults } = this.state;
     let content;
     if (fetched) {
       const typeList = singlePokemon.types.map(item => (
@@ -101,7 +81,6 @@ class PokemonDetails extends Component {
       const abilities = singlePokemon.abilities.map(item => (
         <li key={item.ability.name} className="capitalize">{item.ability.name}</li>
       ));
-      console.log(searchResults);
       const pokemonMatches = searchResults.map(pokemon => (
         <li key={pokemon.name} className="capitalize">
           <button value={pokemon.name} onClick={this.getSelectedPokemon}>{pokemon.name}</button>
