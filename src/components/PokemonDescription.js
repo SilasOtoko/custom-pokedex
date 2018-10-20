@@ -15,7 +15,7 @@ class PokemonDescription extends Component {
     this.setState({
       loading: true
     });
-    fetch(`http://pokeapi.salestock.net/api/v2/pokemon-species/${this.props.pokemon}`)
+    fetch(`https://pokeapi-215911.firebaseapp.com/api/v2/pokemon-species/${this.props.pokemon}`)
       .then(res => res.json())
       .then(data => {
         this.setState({

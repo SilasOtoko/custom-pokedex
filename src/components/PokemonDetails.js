@@ -31,7 +31,7 @@ class PokemonDetails extends Component {
   }
 
   getPokemon(parameter) {
-    fetch(`http://pokeapi.salestock.net/api/v2/pokemon/${parameter}`)
+    fetch(`https://pokeapi-215911.firebaseapp.com/api/v2/pokemon/${parameter}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
