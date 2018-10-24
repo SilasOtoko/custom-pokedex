@@ -7,7 +7,7 @@ class Header extends Component {
     return (
       <header className="header">
         <div className="header__home-link">
-          <Link exact="true" to="/">
+          <Link exact="true" to="/allpokemon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

@@ -15,7 +15,12 @@ class App extends Component {
     };
   }
   componentWillMount() {
-    const data = jsonData.data.results;
+    let data = jsonData.data.results;
+    let id = 0;
+    data.forEach(item => {
+      id = id + 1;
+      item.id = id;
+    });
     this.setState({
       allPokemonData: data.slice(0, 151),
     });
