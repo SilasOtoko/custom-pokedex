@@ -36,6 +36,11 @@
   padding-top: 50px;
 }
 
+.card__sprite img {
+  max-width: 100%;
+  height: auto;
+}
+
 .card__number {
   position: absolute;
   top: 0;
@@ -65,8 +70,11 @@
 
 @media (max-width: 580px) {
   .flex-grid .card {
-    width: 100%;
+    width: 48%;
     margin: 1% 0;
+  }
+  .card__sprite {
+    padding-top: 20%;
   }
 }
 
@@ -82,11 +90,11 @@
   }
   @media (max-width: 580px) {
     .flex-grid {
-      display: block;
+      grid-template-columns: 1fr 1fr;
     }
     .flex-grid .card {
       width: 100%;
-      margin: 20px 0 40px;
+      margin: 1% 0;
     }
   }
 }

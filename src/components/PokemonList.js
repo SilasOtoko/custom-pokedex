@@ -14,6 +14,7 @@ class PokemonList extends Component {
 
     this.updateSearchTerm = this.updateSearchTerm.bind(this);
     this.searchPokemon = this.searchPokemon.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +28,7 @@ class PokemonList extends Component {
   }
 
   updateSearchTerm(event) {
+    event.preventDefault();
     const term = event.target.value.toLowerCase();
     this.setState({
       searchTerm: term
@@ -43,10 +45,14 @@ class PokemonList extends Component {
     });
   }
 
+  onSubmit(event) {
+    event.preventDefault();
+    document.getElementById('search').blur();
+  }
+
   render() {
     let { allPokemon, searchTerm, fetched } = this.state;
     let pokemonList;
-    console.log('search: ' + searchTerm);
     if (fetched) {
       pokemonList = allPokemon.map((pokemon, index) => (
         <Pokemon
@@ -65,12 +71,15 @@ class PokemonList extends Component {
         <h1 className="site-title">The Kanto Pokedex!</h1>
         <div className="search-box">
           <div>
+          <form onSubmit={this.onSubmit}>
             <input
-                onChange={this.updateSearchTerm}
-                value={searchTerm}
-                type="text"
-                placeholder="Search For Pokemon"
-              />
+              onChange={this.updateSearchTerm}
+              value={searchTerm}
+              type="text"
+              placeholder="Search For Pokemon"
+              id="search"
+            />
+          </form>
           </div>
         </div>
         <div className="flex-grid">{pokemonList}</div>
