@@ -39,7 +39,7 @@
   width: 150px;
   height: auto;
 }
-.header__search {
+.header__account {
   height: 70px;
   width: 70px;
   position: absolute;
@@ -56,10 +56,25 @@
   justify-content: center;
   -webkit-justify-content: center;
 }
-.header__search a {
-  color: #333;
+.header__account button {
+  border: 0;
+  background-color: none;
 }
-.header__search svg {
-  width: 35px;
-  height: 35px;
+.header__account svg {
+  width: 45px;
+  height: 45px;
+  background-color: #eee;
+  border-radius: 100%;
+  border: 10px solid #eee;
+}
+
+.header .current-user__photo {
+  width: 55px;
+}
+
+.header .current-user__photo img {
+  max-width: 100%;
+  height: auto;
+  background-color: #eee;
+  border-radius: 100%;
 }

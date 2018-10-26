@@ -56,6 +56,27 @@
   border-bottom-right-radius: 10px;
 }
 
+.favorite {
+  color: #333;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  margin: 10px auto 0;
+  display: block;
+}
+
+.favorite svg {
+  transition: fill 150ms, color 150ms;
+  fill: transparent;
+  color: #333;
+}
+
+.favorite svg:hover {
+  fill: #ce2121;
+  color: #ce2121;
+  cursor: pointer;
+}
+
 @media (max-width: 980px) {
   .flex-grid .card {
     width: 28%;
@@ -109,6 +130,14 @@
   display: flex;
   display: -webkit-flex;
   padding: 40px 5%;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .pokemon-info__sprite {
   height: auto;
@@ -190,7 +219,7 @@
   color: #fff;
 }
 
-.button--back {
+.button--navigation {
   background-color: #9d9b9b;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   display: flex;
@@ -203,11 +232,25 @@
   width: 100px;
   padding: 10px 15px;
   text-align: center;
+  font-size: 1rem;
 }
 
-.button--back svg {
+.button--navigation:disabled {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.16);
+  color: #ccc;
+}
+
+.button--navigation:disabled svg {
+  fill: #ccc;
+}
+
+.button--navigation svg {
   width: 20px;
   fill: #fff;
+  margin-left: 5px;
+}
+
+.button--previous svg {
   margin-right: 5px;
 }
 

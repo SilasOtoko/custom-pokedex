@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Header from './Header';
 import Pokemon from './Pokemon';
 
 class PokemonList extends Component {
@@ -67,7 +66,6 @@ class PokemonList extends Component {
     }
     return (
       <div>
-        <Header />
         <h1 className="site-title">The Kanto Pokedex!</h1>
         <div className="search-box">
           <div>

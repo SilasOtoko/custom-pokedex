@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { auth, googleAuthProvider } from '../firebase';
 import '../css/header.css';
 
 class Header extends Component {
   render() {
+    const { currentUser } = this.props;
     return (
       <header className="header">
         <div className="header__home-link">
@@ -27,24 +29,34 @@ class Header extends Component {
         <div className="header__logo">
           <img src={require('../images/pokedex-logo.svg')} alt="Pokedex Logo" />
         </div>
-        <div className="header__search">
-          <Link exact="true" to="/allpokemon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-search"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </Link>
+        <div className="header__account">
+          {
+            !currentUser && (
+            <button onClick={() => auth.signInWithPopup(googleAuthProvider)}>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-user"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </button>
+          )}
+          {currentUser && (
+            <div className="current-user__photo">
+              <Link exact="true" to="/profile">
+                <img src={currentUser.photoURL} alt={currentUser.displayName} />
+              </Link>
+            </div>
+          )}
         </div>
       </header>
     );

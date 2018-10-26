@@ -3,15 +3,19 @@ import { Route } from 'react-router-dom';
 import './css/App.css';
 import './css/spinner.css';
 import Home from './components/Home';
+import Header from './components/Header';
 import PokemonList from './components/PokemonList';
 import PokemonDetails from './components/PokemonDetails';
+import Profile from './components/Profile';
 import jsonData from './pokemonlist';
+import { auth } from './firebase.js';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      allPokemonData: {}
+      allPokemonData: {},
+      currentUser: null
     };
   }
   componentWillMount() {
@@ -24,12 +28,20 @@ class App extends Component {
     this.setState({
       allPokemonData: data.slice(0, 151),
     });
+    auth.onAuthStateChanged(currentUser => {
+      this.setState({ currentUser });
+    });
   }
   render() {
-    const { allPokemonData } = this.state;
+    const { allPokemonData, currentUser } = this.state;
     return (
       <div>
-        <Route exact path="/" component={Home} />
+        <Header currentUser={currentUser} />
+        <Route 
+          exact 
+          path="/" 
+          component={Home} 
+        />
         <Route
           exact
           path="/allpokemon"
@@ -39,6 +51,10 @@ class App extends Component {
           exact
           path={`/pokemon/:id`}
           render={props => <PokemonDetails {...props} allPokemon={allPokemonData} />}
+        />
+        <Route
+          path="/profile"
+          render={props => <Profile currentUser={currentUser} />}
         />
       </div>
     )

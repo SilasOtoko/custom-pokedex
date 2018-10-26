@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Header from './Header';
 import { pad } from '../helpers';
 import PokemonDescription from './PokemonDescription';
 import '../css/spinner.css';
@@ -21,6 +20,8 @@ class PokemonDetails extends Component {
     this.searchPokemon = this.searchPokemon.bind(this);
     this.changeSearchTerm = this.changeSearchTerm.bind(this);
     this.getSelectedPokemon = this.getSelectedPokemon.bind(this);
+    this.getNextPokemon = this.getNextPokemon.bind(this);
+    this.getPreviousPokemon = this.getPreviousPokemon.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +44,15 @@ class PokemonDetails extends Component {
       .catch(err => {
         console.log(err)
       });
+    if (this.state.singlePokemon.id === this.props.allPokemon.length) {
+      document.querySelector('.button--next').disabled = true;
+    } else if (this.state.singlePokemon.id === 1) {
+      document.querySelector('.button--previous').disabled = true;
+    } else if (this.state.singlePokemon.id > 1) {
+      document.querySelector('.button--previous').disabled = false;
+    } else if (this.state.singlePokemon.id < this.props.allPokemon.length) {
+      document.querySelector('.button--next').disabled = false;
+    }
   }
 
   searchPokemon() {
@@ -71,6 +81,29 @@ class PokemonDetails extends Component {
     }, () => this.getPokemon(term));
   }
 
+  getNextPokemon() {
+    let currentPokemonId = this.state.singlePokemon.id;
+    if (currentPokemonId < this.props.allPokemon.length) {
+      let nextPokemonId = currentPokemonId + 1;
+      this.getPokemon(nextPokemonId);
+      document.querySelector('.button--next').disabled = false;
+    } else {
+      console.log('last pokemon');
+      document.querySelector('.button--next').disabled = true;
+    }
+  }
+
+  getPreviousPokemon() {
+    let currentPokemonId = this.state.singlePokemon.id;
+    if (currentPokemonId > 1) {
+      let nextPokemonId = currentPokemonId - 1;
+      this.getPokemon(nextPokemonId);
+      document.querySelector('.button--previous').disabled = false;
+    } else if (currentPokemonId === 1) {
+      document.querySelector('.button--previous').disabled = true;
+    }
+  }
+
   render() {
     const { loading, fetched, singlePokemon, searchResults } = this.state;
     let content;
@@ -91,14 +124,14 @@ class PokemonDetails extends Component {
         <div className="pokemon-info">
           <div className="pokemon-info__navigation">
             <div>
-              <Link exact="true" to="/allpokemon" className="button button--back">
+              <button className="button button--navigation button--previous" onClick={this.getPreviousPokemon}>
                 <svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 40 40">
                   <path d="M17.1,34.1c-0.7,0-1.4-0.7-1.6-0.8C15.1,32.9,2,23.1,0.6,21.7c-0.5-0.5-0.6-1-0.6-1.4c0-0.8,0.7-1.4,0.8-1.5l14.5-12
       c0.2-0.2,0.9-0.9,1.6-0.9c0.3,0,1.1,0.1,1.1,1.5v6.2h20.5c0.1,0,0.1,0,0.2,0c0.2,0,1.4,0.1,1.4,1.9v9.5c0,1.3-0.9,1.7-1.4,1.7H18.3
       v5.7C18.3,33.9,17.6,34.1,17.1,34.1L17.1,34.1z M17.1,32.9v0.6V32.9z" />
                 </svg>
-                <span>Back</span>
-              </Link>
+                <span>Prev</span>
+              </button>
             </div>
             <div className="search-box">
               <div>
@@ -112,6 +145,12 @@ class PokemonDetails extends Component {
                   <ul>{pokemonMatches}</ul>
                 </div>
               </div>
+            </div>
+            <div>
+              <button className="button button--navigation button--next" onClick={this.getNextPokemon}>
+                <span>Next</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M23 5.9c.7 0 1.4.7 1.6.8.4.4 13.5 10.2 14.9 11.6.5.5.6 1 .6 1.4 0 .8-.7 1.4-.8 1.5l-14.5 12c-.2.2-.9.9-1.6.9-.3 0-1.1-.1-1.1-1.5v-6.2H1.4c-.2 0-1.4-.1-1.4-1.9V15c0-1.3.9-1.7 1.4-1.7h20.4V7.6c0-1.5.7-1.7 1.2-1.7z"/></svg>
+              </button>
             </div>
           </div>
           <div className="pokemon-info__sprite">
@@ -141,7 +180,6 @@ class PokemonDetails extends Component {
     }
     return (
       <div>
-        <Header />
         {content}
       </div>
     );
