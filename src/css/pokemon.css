@@ -237,7 +237,7 @@
   position: absolute;
   top: 20px;
   opacity: 1;
-  outline: 0;
+  border: 0;
 }
 
 .button--navigation:disabled {
@@ -290,7 +290,7 @@
   position: absolute;
   top: 20px;
   width: 400px;
-  max-width: 40%;
+  max-width: 50%;
   left: 0;
   right: 0;
   text-align: center;
