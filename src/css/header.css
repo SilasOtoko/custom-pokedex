@@ -59,6 +59,7 @@
 .header__account button {
   border: 0;
   background-color: none;
+  outline: 0;
 }
 .header__account svg {
   width: 45px;

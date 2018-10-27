@@ -237,6 +237,7 @@
   position: absolute;
   top: 20px;
   opacity: 1;
+  outline: 0;
 }
 
 .button--navigation:disabled {
