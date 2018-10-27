@@ -65,7 +65,7 @@ class PokemonList extends Component {
       pokemonList = null;
     }
     return (
-      <div>
+      <div className="all-pokemon-container">
         <h1 className="site-title">The Kanto Pokedex!</h1>
         <div className="search-box">
           <div>

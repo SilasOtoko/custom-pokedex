@@ -40,19 +40,20 @@ class PokemonDetails extends Component {
           loading: true,
           fetched: true
         });
+        if (data.id === 1) {
+          document.querySelector('.button--previous').style.display = "none";
+          document.querySelector('.button--next').style.display = "block";
+        } else if (data.id === this.props.allPokemon.length) {
+          document.querySelector('.button--previous').style.display = "block";
+          document.querySelector('.button--next').style.display = "none";
+        } else {
+          document.querySelector('.button--previous').style.display = "block";
+          document.querySelector('.button--next').style.display = "block";
+        }
       })
       .catch(err => {
         console.log(err)
       });
-    if (this.state.singlePokemon.id === this.props.allPokemon.length) {
-      document.querySelector('.button--next').disabled = true;
-    } else if (this.state.singlePokemon.id === 1) {
-      document.querySelector('.button--previous').disabled = true;
-    } else if (this.state.singlePokemon.id > 1) {
-      document.querySelector('.button--previous').disabled = false;
-    } else if (this.state.singlePokemon.id < this.props.allPokemon.length) {
-      document.querySelector('.button--next').disabled = false;
-    }
   }
 
   searchPokemon() {
@@ -82,26 +83,26 @@ class PokemonDetails extends Component {
   }
 
   getNextPokemon() {
-    let currentPokemonId = this.state.singlePokemon.id;
+    const currentPokemonId = this.state.singlePokemon.id;
+    const nextPokemonId = currentPokemonId + 1;
+    document.querySelector('.button--previous').style.display = "block";
     if (currentPokemonId < this.props.allPokemon.length) {
-      let nextPokemonId = currentPokemonId + 1;
-      this.getPokemon(nextPokemonId);
-      document.querySelector('.button--next').disabled = false;
+      document.querySelector('.button--next').style.display = "block";
     } else {
-      console.log('last pokemon');
-      document.querySelector('.button--next').disabled = true;
+      document.querySelector('.button--next').style.display = "none";
     }
+    this.getPokemon(nextPokemonId);
   }
 
   getPreviousPokemon() {
-    let currentPokemonId = this.state.singlePokemon.id;
-    if (currentPokemonId > 1) {
-      let nextPokemonId = currentPokemonId - 1;
-      this.getPokemon(nextPokemonId);
-      document.querySelector('.button--previous').disabled = false;
-    } else if (currentPokemonId === 1) {
-      document.querySelector('.button--previous').disabled = true;
+    const currentPokemonId = this.state.singlePokemon.id;
+    const previousPokemonId = currentPokemonId - 1;
+    if (currentPokemonId > 2) {
+      document.querySelector('.button--previous').style.display = "block";
+    } else if (currentPokemonId === 2) {
+      document.querySelector('.button--previous').style.display = "none";
     }
+    this.getPokemon(previousPokemonId);
   }
 
   render() {
@@ -179,7 +180,7 @@ class PokemonDetails extends Component {
       content = <div className="spinner"><img src={require('../images/pokeball.svg')} alt="Pokedex Logo" /></div>;
     }
     return (
-      <div>
+      <div className="single-pokemon-container">
         {content}
       </div>
     );
