@@ -3,12 +3,25 @@ import { auth } from '../firebase';
 import PropTypes from 'prop-types';
 import '../css/profile.css';
 import PokemonList from './PokemonList';
+import { withRouter } from 'react-router-dom';
 
 class Profile extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogout() {
+    auth.signOut();
+    this.props.history.replace("/allpokemon");
+  }
+
+
   render() {
     const { currentUser } = this.props;
     return (
-      <div>
+      <div className="user-profile">
         {currentUser && (
           <div>
             <div className="current-user card">
@@ -18,7 +31,7 @@ class Profile extends Component {
               <div className="current-user__identification">
                 <h3>{currentUser.displayName}</h3>
                 <p>{currentUser.email}</p>
-                <button onClick={() => auth.signOut()}>Sign Out</button>
+                <button onClick={this.handleLogout}>Sign Out</button>
               </div>
             </div>
             <PokemonList />
@@ -38,4 +51,4 @@ Profile.propTypes = {
   })
 };
 
-export default Profile;
+export default withRouter(Profile);

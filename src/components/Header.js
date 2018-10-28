@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { auth, googleAuthProvider } from '../firebase';
 import '../css/header.css';
 
@@ -63,4 +63,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

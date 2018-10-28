@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
+import './css/normalize.css';
 import './css/App.css';
 import './css/spinner.css';
 import Home from './components/Home';
@@ -8,7 +9,7 @@ import PokemonList from './components/PokemonList';
 import PokemonDetails from './components/PokemonDetails';
 import Profile from './components/Profile';
 import jsonData from './pokemonlist';
-import { auth } from './firebase.js';
+import { auth, database } from './firebase.js';
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class App extends Component {
       allPokemonData: {},
       currentUser: null
     };
+
+    this.usersRef = database.ref('users');
   }
   componentWillMount() {
     let data = jsonData.data.results;
@@ -35,7 +38,7 @@ class App extends Component {
   render() {
     const { allPokemonData, currentUser } = this.state;
     return (
-      <div>
+      <div className="app-wrapper">
         <Header currentUser={currentUser} />
         <Route 
           exact 
@@ -45,7 +48,7 @@ class App extends Component {
         <Route
           exact
           path="/allpokemon"
-          render={props => <PokemonList allPokemon={allPokemonData} />}
+          render={props => <PokemonList allPokemon={allPokemonData} currentUser={currentUser} />}
         />
         <Route
           exact
@@ -61,4 +64,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

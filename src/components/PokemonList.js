@@ -51,6 +51,7 @@ class PokemonList extends Component {
 
   render() {
     let { allPokemon, searchTerm, fetched } = this.state;
+    let { currentUser } = this.props;
     let pokemonList;
     if (fetched) {
       pokemonList = allPokemon.map((pokemon, index) => (
@@ -59,6 +60,7 @@ class PokemonList extends Component {
           id={pokemon.id}
           pokemon={pokemon}
           allPokemon={allPokemon}
+          currentUser={currentUser}
         />
       ));
     } else {
