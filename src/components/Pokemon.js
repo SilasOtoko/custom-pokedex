@@ -8,7 +8,6 @@ class Pokemon extends Component {
   constructor() {
     super();
 
-    this.favoritesRef = database.ref('favorites');
     this.addToFavorites = this.addToFavorites.bind(this);
   }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Pokemon from './Pokemon';
+import { auth, database } from '../firebase';
 
 class PokemonList extends Component {
   constructor() {
@@ -8,22 +9,33 @@ class PokemonList extends Component {
     this.state = {
       allPokemon: {},
       searchTerm: '',
-      fetched: false
+      fetched: false,
+      favoritePokemon: []
     };
+
+    this.favoritesRef = database.ref('favorites');
 
     this.updateSearchTerm = this.updateSearchTerm.bind(this);
     this.searchPokemon = this.searchPokemon.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.markFavorites = this.markFavorites.bind(this);
   }
 
   componentDidMount() {
-    const { allPokemon } = this.props;
+    const { allPokemon, currentUser } = this.props;
     if (allPokemon !== undefined) {
       this.setState({
         allPokemon: allPokemon,
         fetched: true
       });
     }
+    console.log({currentUser});
+    auth.onAuthStateChanged(currentUser => {
+      if (currentUser) {
+        console.log('user exists');
+        this.markFavorites();
+      }
+    });
   }
 
   updateSearchTerm(event) {
@@ -47,6 +59,17 @@ class PokemonList extends Component {
   onSubmit(event) {
     event.preventDefault();
     document.getElementById('search').blur();
+  }
+
+  markFavorites() {
+    console.log('marking favorites');
+    this.favoritesRef.orderByChild('user').equalTo(this.props.currentUser.uid).on('value', snapshot => {
+      let val = snapshot.val();
+      console.log({val});
+      this.setState( {
+        favoritePokemon: snapshot.val()
+      });
+    });
   }
 
   render() {
