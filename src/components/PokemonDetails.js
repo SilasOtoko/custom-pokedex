@@ -25,9 +25,6 @@ class PokemonDetails extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      loading: true
-    });
     this.getPokemon(this.props.match.params.id);
   }
 

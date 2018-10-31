@@ -16,10 +16,10 @@ class App extends Component {
     super(props);
     this.state = {
       allPokemonData: {},
-      currentUser: null
+      currentUser: null,
+      userFavorites: []
     };
 
-    this.usersRef = database.ref('users');
   }
   componentWillMount() {
     let data = jsonData.data.results;
@@ -32,7 +32,14 @@ class App extends Component {
       allPokemonData: data.slice(0, 151),
     });
     auth.onAuthStateChanged(currentUser => {
-      this.setState({ currentUser });
+      console.log(currentUser);
+      if (currentUser) {
+        database.ref('users/' + currentUser.uid).set({
+          userName: currentUser.name,
+          id: currentUser.uid,
+          favoritePokemon: []
+        });
+      }
     });
   }
   render() {
