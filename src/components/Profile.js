@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { auth, database } from '../firebase';
+import { auth, database, googleAuthProvider } from '../firebase';
 import PropTypes from 'prop-types';
 import '../css/profile.css';
 import PokemonList from './PokemonList';
@@ -69,6 +69,7 @@ class Profile extends Component {
           )}
           {!currentUser && (
             <div className="button-wrapper">
+              <button className="button" onClick={() => auth.signInWithPopup(googleAuthProvider)}>Sign In With Google</button>
               <Link to="/login" className="button">
                 Login
               </Link>

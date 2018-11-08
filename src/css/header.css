@@ -71,6 +71,7 @@
 
 .header__account svg.active {
   background-color: transparent;
+  border-color: #fff;
 }
 
 .header .current-user__photo {

@@ -40,7 +40,6 @@ class App extends Component {
       this.setState({
         currentUser: currentUser
       });
-      console.log(currentUser);
       if(currentUser) {
         this.usersRef = database.ref('/users');
         this.userRef = this.usersRef.child(currentUser.uid);
@@ -57,17 +56,6 @@ class App extends Component {
   }
 
   getFavorites() {
-    if (this.state.currentUser) {
-      database.ref('/favorites').child(this.state.currentUser.uid).on('value', snapshot => {
-        const favorites = [];
-        Object.keys(snapshot.val()).forEach(function(key) {
-          favorites.push(key);
-        });
-        this.setState({
-          userFavorites: favorites
-        });
-      });
-  }
 
   }
   render() {
