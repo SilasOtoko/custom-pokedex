@@ -1,7 +1,3 @@
-.user-profile {
-	margin-top: 40px;
-	padding: 0 5%;
-}
 
 .current-user {
 	display: flex;
@@ -20,4 +16,26 @@
 
 .current-user__indentification {
 	width: 50%;
+}
+
+.user-profile .button {
+	padding: 15px 30px;
+  background-color: #333;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.user-form {
+	padding: 5%;
+}
+
+.user-form input {
+	width: 100%;
+	border-radius: 3px;
+	padding: 10px 15px;
+	border: 1px solid #ccc;
+	margin: 10px 0;
 }

@@ -17,7 +17,6 @@ class PokemonList extends Component {
     this.searchPokemon = this.searchPokemon.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.addToFavorites = this.addToFavorites.bind(this);
-    this.markFavorites = this.markFavorites.bind(this);
   }
 
   componentDidMount() {
@@ -57,20 +56,12 @@ class PokemonList extends Component {
     event.preventDefault();
 
     const favorite = event.currentTarget.dataset.value;
+    const currentUser = this.props.currentUser;
 
-    return this.usersRef.push(favorite);
-  }
-
-  markFavorites() {
-    console.log('marking favorites');
-    if (this.props.currentUser) {
-      this.usersRef.on('value', snapshot => {
-        this.setState({
-          favoritePokemon: snapshot.val()
-        });
-      });
-      console.log(this.state.favoritePokemon);
-    }
+    database.ref('/favorites')
+      .child(currentUser.uid)
+      .child(favorite)
+      .set(favorite);
   }
 
   render() {

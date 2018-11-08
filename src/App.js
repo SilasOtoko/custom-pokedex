@@ -7,9 +7,12 @@ import Home from './components/Home';
 import Header from './components/Header';
 import PokemonList from './components/PokemonList';
 import PokemonDetails from './components/PokemonDetails';
+import pick from 'lodash/pick';
 import Profile from './components/Profile';
 import jsonData from './pokemonlist';
-import { auth, database } from './firebase.js';
+import Login from './components/Login';
+import Register from './components/Register';
+import { auth, database } from './firebase';
 
 class App extends Component {
   constructor(props) {
@@ -19,6 +22,8 @@ class App extends Component {
       currentUser: null,
       userFavorites: []
     };
+
+    this.getFavorites = this.getFavorites.bind(this);
 
   }
   componentWillMount() {
@@ -32,18 +37,41 @@ class App extends Component {
       allPokemonData: data.slice(0, 151),
     });
     auth.onAuthStateChanged(currentUser => {
+      this.setState({
+        currentUser: currentUser
+      });
       console.log(currentUser);
-      if (currentUser) {
-        database.ref('users/' + currentUser.uid).set({
-          userName: currentUser.name,
-          id: currentUser.uid,
-          favoritePokemon: []
+      if(currentUser) {
+        this.usersRef = database.ref('/users');
+        this.userRef = this.usersRef.child(currentUser.uid);
+
+        this.userRef.once('value').then((snapshot) => {
+          if (snapshot.val()) return;
+          const userData = pick(currentUser, ['displayName', 'photoURL', 'email']);
+          this.userRef.set(userData);
         });
+
+        this.getFavorites();
       }
     });
   }
+
+  getFavorites() {
+    if (this.state.currentUser) {
+      database.ref('/favorites').child(this.state.currentUser.uid).on('value', snapshot => {
+        const favorites = [];
+        Object.keys(snapshot.val()).forEach(function(key) {
+          favorites.push(key);
+        });
+        this.setState({
+          userFavorites: favorites
+        });
+      });
+  }
+
+  }
   render() {
-    const { allPokemonData, currentUser } = this.state;
+    const { allPokemonData, currentUser, userFavorites } = this.state;
     return (
       <div className="app-wrapper">
         <Header currentUser={currentUser} />
@@ -64,7 +92,15 @@ class App extends Component {
         />
         <Route
           path="/profile"
-          render={props => <Profile currentUser={currentUser} />}
+          render={props => <Profile {...props} currentUser={currentUser} favoritePokemon={userFavorites} allPokemon={allPokemonData}/>}
+        />
+        <Route
+          path="/login"
+          render={props => <Login />}
+        />
+        <Route
+          path="/register"
+          render={props => <Register />}
         />
       </div>
     )

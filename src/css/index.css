@@ -50,6 +50,7 @@ h6 {
   border-radius: 5px;
   color: #fff;
   text-decoration: none;
+  display: inline-block;
 }
 .button--small {
   padding: 5px 10px;
@@ -59,7 +60,24 @@ h6 {
 .button--blue {
   background-color: #4b83a9;
 }
+.button-wrapper .button {
+  margin-right: 5px;
+}
+
+.button--subtle {
+  background-color: #eee;
+  color: #333;
+}
+
+.button-wrapper .button:last-of-type {
+  margin-right: 0;
+}
 .site-title {
   text-align: center;
   margin-top: 40px;
+}
+
+.page-container {
+  margin-top: 40px;
+  padding: 0 5%;
 }

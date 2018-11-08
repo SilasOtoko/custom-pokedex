@@ -56,9 +56,10 @@
   justify-content: center;
   -webkit-justify-content: center;
 }
-.header__account button {
+.header__account a {
   border: 0;
   background-color: transparent;
+  color: #333;
 }
 .header__account svg {
   width: 45px;
@@ -66,6 +67,10 @@
   background-color: #eee;
   border-radius: 100%;
   border: 10px solid #eee;
+}
+
+.header__account svg.active {
+  background-color: transparent;
 }
 
 .header .current-user__photo {
