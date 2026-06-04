@@ -37,18 +37,20 @@ function PokemonList({ allPokemon, currentUser, favorites, toggleFavorite }) {
     <div className='max-w-6xl mx-auto px-4 py-8 w-full'>
       <h1 className='text-3xl text-center text-gray-700 mb-6 font-serif'>Kanto Pokédex</h1>
 
-      <div className='flex justify-between'>
+      <div className='grid md:grid-cols-2 lg:flex justify-stretch lg:justify-between gap-4'>
         {/* Search */}
-        <div className='min-w-sm'>
+        <div className='lg:min-w-sm w-full grow'>
           <Label htmlFor='pokemon-search'>Search by name</Label>
-          <input id='pokemon-search' type='text' placeholder='Search Pokémon...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='w-full max-w-md mx-auto block px-4 py-2 border border-gray-400 rounded-md focus-within:outline-2 focus-within:outline-sky-600 focus-within:-outline-offset-1 focus-visible:border-transparent bg-white' />
+          <input id='pokemon-search' type='text' placeholder='Search Pokémon...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='w-full lg:max-w-md block px-4 py-2 border border-gray-400 rounded-md focus-within:outline-2 focus-within:outline-sky-600 focus-within:-outline-offset-1 focus-visible:border-transparent bg-white' />
         </div>
 
-        <TypeCombobox selectedTypes={activeTypes} onChange={setActiveTypes} />
+        <div className='flex justify-end grow'>
+          <TypeCombobox selectedTypes={activeTypes} onChange={setActiveTypes} />
+        </div>
       </div>
 
       {/* Grid */}
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4'>
+      <div className='grid xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-8'>
         {filteredPokemon.map((pokemon) => (
           <Pokemon key={pokemon.name} id={pokemon.id} pokemon={pokemon} currentUser={currentUser} favorites={favorites} toggleFavorite={toggleFavorite} />
         ))}

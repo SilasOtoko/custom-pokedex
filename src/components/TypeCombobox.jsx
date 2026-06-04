@@ -3,7 +3,7 @@ import { ALL_TYPES, TYPE_COLORS } from '../pokemonTypes';
 import Label from './form/Label';
 import TypeBadge from './TypeBadge';
 
-function TypeCombobox({ selectedTypes, onChange }) {
+function TypeCombobox({ selectedTypes, onChange, className = '' }) {
   const [inputValue, setInputValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -59,13 +59,13 @@ function TypeCombobox({ selectedTypes, onChange }) {
   };
 
   return (
-    <div className='relative min-w-md'>
+    <div className={`relative w-full lg:min-w-md ${className}`}>
       {/* Label */}
       <Label htmlFor={comboboxId}>Filter by type</Label>
 
       {/* Input container */}
       <div
-        className='flex flex-wrap gap-1.5 items-center min-h-10 w-full px-4 py-2 bg-white border border-gray-400 rounded-md cursor-text focus-within:outline-2 focus-within:outline-sky-600 focus-within:-outline-offset-1 focus-visible:border-transparent max-w-md'
+        className='flex flex-wrap gap-1.5 items-center min-h-10 w-full px-4 py-2 bg-white border border-gray-400 rounded-md cursor-text focus-within:outline-2 focus-within:outline-sky-600 focus-within:-outline-offset-1 focus-visible:border-transparent lg:max-w-md'
         onClick={() => {
           inputRef.current?.focus();
         }}
