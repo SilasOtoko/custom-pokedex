@@ -1,65 +1,27 @@
-@import url('https://fonts.googleapis.com/css?family=Merriweather:400|Open+Sans');
+@import 'tailwindcss';
+@import './spinner';
 
-html {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-*,
-*:before,
-*:after {
-  -webkit-box-sizing: inherit;
-  -moz-box-sizing: inherit;
-  box-sizing: inherit;
+@theme {
+  --font-sans: 'Open Sans', sans-serif;
+  --font-serif: 'Merriweather', serif;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background: #e2e1e0;
-  color: #666;
-  font-family: 'Open Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Merriweather', serif;
-  font-weight: 400;
-  color: #444;
-  margin: 1.5em 0 0.25em 0;
-  padding: 0 0 0.25em 0;
-  line-height: 1.2;
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
 }
 
-.main {
-  padding: 16px;
-}
-
-.capitalize {
-  text-transform: capitalize;
-}
-
-.button {
-  padding: 15px 30px;
-  background-color: #333;
-  border-radius: 5px;
-  color: #fff;
-  text-decoration: none;
-}
-.button--small {
-  padding: 5px 10px;
-  min-width: 100px;
-  text-align: center;
-}
-.button--blue {
-  background-color: #4b83a9;
-}
-.site-title {
-  text-align: center;
-  margin-top: 40px;
+@layer utilities {
+  .spinner-pokeball {
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
