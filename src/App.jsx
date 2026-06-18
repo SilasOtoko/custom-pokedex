@@ -8,7 +8,10 @@ import Header from './components/Header';
 import PokemonList from './components/PokemonList';
 import PokemonDetails from './components/PokemonDetails';
 import Profile from './components/Profile';
+import Shop from './components/Shop';
+import ItemDetail from './components/ItemDetail';
 import jsonData from './pokemonlist';
+import { CartProvider } from './context/CartContext';
 import { auth, database } from './firebase.js';
 
 function App() {
@@ -54,13 +57,17 @@ function App() {
 
   return (
     <div className='flex flex-col min-h-screen bg-gray-200'>
-      <Header currentUser={currentUser} />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/allpokemon' element={<PokemonList allPokemon={allPokemonData} currentUser={currentUser} favorites={favorites} toggleFavorite={toggleFavorite} />} />
-        <Route path='/pokemon/:id' element={<PokemonDetails allPokemon={allPokemonData} currentUser={currentUser} favorites={favorites} toggleFavorite={toggleFavorite} />} />
-        <Route path='/profile' element={<Profile currentUser={currentUser} allPokemon={allPokemonData} favorites={favorites} toggleFavorite={toggleFavorite} />} />
-      </Routes>
+      <CartProvider>
+        <Header currentUser={currentUser} />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/shop' element={<Shop />} />
+          <Route path='/shop/:itemName' element={<ItemDetail />} />
+          <Route path='/pokedex' element={<PokemonList allPokemon={allPokemonData} currentUser={currentUser} favorites={favorites} toggleFavorite={toggleFavorite} />} />
+          <Route path='/pokemon/:id' element={<PokemonDetails allPokemon={allPokemonData} currentUser={currentUser} favorites={favorites} toggleFavorite={toggleFavorite} />} />
+          <Route path='/profile' element={<Profile currentUser={currentUser} allPokemon={allPokemonData} favorites={favorites} toggleFavorite={toggleFavorite} />} />
+        </Routes>
+      </CartProvider>
     </div>
   );
 }
