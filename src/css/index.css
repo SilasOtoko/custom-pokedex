@@ -1,28 +1,127 @@
-@import 'tailwindcss';
-@import './spinner';
+@import "tailwindcss";
+@import "./spinner";
 
 @theme {
-  --font-sans: 'Open Sans', sans-serif;
-  --font-serif: 'Merriweather', serif;
-  --breakpoint-xs: 30rem;
+    --font-sans: "Open Sans", sans-serif;
+    --font-serif: "Merriweather", serif;
+    --font-alt: "Stardos Stencil", var(--font-serif);
+    --breakpoint-xxs: 26rem;
+    --breakpoint-xs: 30rem;
 }
 
 @layer base {
-  html {
-    scrollbar-gutter: stable;
-  }
+    html {
+        scrollbar-gutter: stable;
+    }
 }
 
 @layer utilities {
-  .spinner-pokeball {
-    animation: spin 1s linear infinite;
-  }
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
+    .animate-fade-in-up {
+        animation: fadeInUp 0.3s ease both;
     }
-    to {
-      transform: rotate(360deg);
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
-  }
+    .spinner-pokeball {
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes drawer-enter {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes drawer-exit {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(100%);
+        }
+    }
+
+    @keyframes backdrop-enter {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes backdrop-exit {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+}
+@layer components {
+    .drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        margin-left: auto;
+        height: 100vh;
+        max-height: 100vh;
+        width: 20rem;
+        background-color: white;
+        box-shadow: var(--shadow-xl);
+        overflow-y: auto;
+    }
+
+    .drawer::backdrop {
+        background-color: transparent;
+        transition: background-color 200ms;
+    }
+
+    .drawer[open] {
+        animation: drawer-enter 300ms ease-in forwards;
+    }
+
+    .drawer.closing {
+        animation: drawer-exit 300ms ease-out forwards;
+    }
+
+    .drawer[open]::backdrop {
+        background-color: rgba(0, 0, 0, 0.3);
+        animation: backdrop-enter 300ms ease-in forwards;
+    }
+
+    .drawer.closing::backdrop {
+        background-color: transparent;
+    }
+
+    .modal {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        max-width: 20rem;
+        background-color: white;
+        box-shadow: var(--shadow-xl);
+    }
 }
