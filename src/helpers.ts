@@ -21,7 +21,9 @@ export function pad(number, length) {
   return str;
 }
 
-export function getEnglishEntry(arr) {
+export function getEnglishEntry(
+  arr: { name: string; language: { name: string } }[],
+) {
   return arr?.find((entry) => entry.language.name === 'en');
 }
 
@@ -33,12 +35,33 @@ export function formatLabel(str) {
   return str?.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-export function getItemSpriteUrl(name) {
+const TM_TYPE_SPRITES: Record<string, string> = {
+  normal: '/tm-sprites/normal.png',
+  fire: '/tm-sprites/fire.png',
+  water: '/tm-sprites/water.png',
+  electric: '/tm-sprites/electric.png',
+  grass: '/tm-sprites/grass.png',
+  ice: '/tm-sprites/ice.png',
+  fighting: '/tm-sprites/fighting.png',
+  poison: '/tm-sprites/poison.png',
+  ground: '/tm-sprites/ground.png',
+  flying: '/tm-sprites/flying.png',
+  psychic: '/tm-sprites/psychic.png',
+  bug: '/tm-sprites/bug.png',
+  rock: '/tm-sprites/rock.png',
+  ghost: '/tm-sprites/ghost.png',
+  dragon: '/tm-sprites/dragon.png',
+  dark: '/tm-sprites/dark.png',
+  steel: '/tm-sprites/steel.png',
+  fairy: '/tm-sprites/fairy.png',
+};
+
+export function getItemSpriteUrl(name: string, moveType?: string): string {
   if (SPRITE_OVERRIDES[name]) return SPRITE_OVERRIDES[name];
 
   const tmMatch = name?.match(/^(hm|tm)(\d+)$/);
   if (tmMatch) {
-    return `https://www.serebii.net/itemdex/sprites/${tmMatch[1]}${tmMatch[2].padStart(2, '0')}.png`;
+    return TM_TYPE_SPRITES[moveType ?? ''] ?? TM_TYPE_SPRITES.normal;
   }
 
   return `https://www.serebii.net/itemdex/sprites/sv/${formatSpriteName(name)}.png`;
