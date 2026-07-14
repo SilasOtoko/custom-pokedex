@@ -11,11 +11,14 @@ import { fetchItemDetail, fetchMachineMove } from '../api/items';
 import pokeballSvg from '../images/pokeball.svg';
 import { UNAVAILABLE_ITEMS } from '../shopCategories';
 import ProductActions from './ProductActions';
+import Card from './Card';
+import LoadingSpinner from './LoadingSpinner';
 
 function ProductCard({ name, url, selectedCategory }) {
   const [itemDetail, setItemDetail] = useState(null);
   const [loading, setLoading] = useState(false);
   const [moveName, setMoveName] = useState(null);
+  const [moveType, setMoveType] = useState(null);
   const isAvailable = !UNAVAILABLE_ITEMS.includes(itemDetail);
 
   useEffect(() => {
@@ -24,21 +27,18 @@ function ProductCard({ name, url, selectedCategory }) {
     fetchItemDetail(url).then((data) => {
       setItemDetail(data);
       setLoading(false);
-      fetchMachineMove(data).then((move) => setMoveName(move));
+      if (selectedCategory.id === 'tms') {
+        fetchMachineMove(data).then((move) => {
+          setMoveName(move?.name);
+          setMoveType(move?.type);
+        });
+      }
     });
   }, [url]);
 
   return (
-    <div className="relative bg-white rounded-md shadow hover:shadow-md has-[:hover]:cursor-pointer has-[:hover]:scale-105 has-[:focus]:scale-105 transition duration-200 transform-gpu will-change-transform outline outline-transparent has-[:hover]:outline-gray-400 xl:aspect-square">
-      {loading && !itemDetail && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <img
-            src={pokeballSvg}
-            className="w-12 h-12 spinner-pokeball"
-            alt="Loading spinner"
-          />
-        </div>
-      )}
+    <Card>
+      {loading && !itemDetail && <LoadingSpinner />}
       {!loading && itemDetail && (
         <div className="relative">
           <Link
@@ -47,7 +47,7 @@ function ProductCard({ name, url, selectedCategory }) {
           ></Link>
           <div className="relative pt-10 z-10 text-center pointer-events-none">
             <img
-              src={getItemSpriteUrl(itemDetail.name)}
+              src={getItemSpriteUrl(itemDetail.name, moveType)}
               alt={itemDetail.name}
               className="w-16 sm:w-24 lg:w-32 h-16 sm:h-24 lg:h-32 mx-auto object-contain"
               width="128"
@@ -64,7 +64,7 @@ function ProductCard({ name, url, selectedCategory }) {
           </div>
         </div>
       )}
-    </div>
+    </Card>
   );
 }
 

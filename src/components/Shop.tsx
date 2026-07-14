@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
 import { SHOP_CATEGORIES, UNAVAILABLE_ITEMS } from '../shopCategories';
 import { fetchCategoryItems } from '../api/items';
-import pokeballSvg from '../images/pokeball.svg';
 import ProductCard from './ProductCard';
+import LoadingSpinner from './LoadingSpinner';
 
 function Shop() {
   const [searchParams] = useSearchParams();
@@ -58,20 +58,7 @@ function Shop() {
       <h1 className="text-3xl text-center text-gray-700 mb-6 font-alt">
         {selectedCategory.label}
       </h1>
-      {loading && (
-        <div
-          role="status"
-          aria-label="Loading items"
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          <img
-            src={pokeballSvg}
-            className="w-12 h-12 spinner-pokeball"
-            alt=""
-            aria-hidden="true"
-          />
-        </div>
-      )}
+      {loading && <LoadingSpinner />}
       {!loading && (
         <div>
           <div
@@ -103,7 +90,9 @@ function Shop() {
                   <div
                     key={`${selectedCategory.id}-${item.name}`}
                     className="animate-fade-in-up"
-                    style={{ animationDelay: `${index * 50}ms` }}
+                    style={{
+                      animationDelay: `${index * 50}ms`,
+                    }}
                   >
                     <ProductCard
                       url={item.url}

@@ -11,7 +11,9 @@ export async function fetchCategoryItems(category) {
 
   return results
     .flatMap((r) => r.items)
-    .filter((item) => !item.name.startsWith('la'));
+    .filter(
+      (item) => !item.name.startsWith('la') && !item.name.startsWith('tr'),
+    );
 }
 
 export function fetchItemDetail(url) {
@@ -26,5 +28,7 @@ export function fetchMachineMove(item, versionGroup = 'red-blue') {
   if (!machineEntry) return Promise.resolve(null);
   return fetch(machineEntry.machine.url)
     .then((res) => res.json())
-    .then((machine) => machine.move.name);
+    .then((machine) => fetch(machine.move.url))
+    .then((res) => res.json())
+    .then((move) => ({ name: move.name, type: move.type.name }));
 }

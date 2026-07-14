@@ -4,24 +4,30 @@ import { fetchItemDetail, fetchMachineMove } from '../api/items';
 import { getItemSpriteUrl, getEnglishEntry, formatLabel } from '../helpers';
 import pokeballSvg from '../images/pokeball.svg';
 import ProductActions from './ProductActions';
+import TypeBadges from './TypeBadges';
 
 function ItemDetail() {
   const { itemName } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
   const [moveName, setMoveName] = useState(null);
+  const [moveType, setMoveType] = useState(null);
   const [isNotifyOpen, setIsNotifyOpen] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     setItem(null);
     setMoveName(null);
+    setMoveType(null);
 
     fetchItemDetail(`https://pokeapi.co/api/v2/item/${itemName}`).then(
       (data) => {
         setItem(data);
         setLoading(false);
-        fetchMachineMove(data).then((move) => setMoveName(move));
+        fetchMachineMove(data).then((move) => {
+          setMoveName(move?.name);
+          setMoveType(move?.type);
+        });
       },
     );
   }, [itemName]);
@@ -62,7 +68,7 @@ function ItemDetail() {
       {item && (
         <div className="p-6 bg-white rounded-md rounded-tl-none relative">
           {/* Category tab */}
-          <span className="text-xs absolute -top-7 left-0 bg-white p-1.5 w-25 text-center rounded-t-xl font-serif text-gray-500">
+          <span className="text-xs absolute -top-7 left-0 bg-white p-1.5 w-25 text-center rounded-t-xl font-alt font-bold text-gray-500">
             {formatLabel(item.category.name)}
           </span>
 
@@ -96,6 +102,10 @@ function ItemDetail() {
                 Teaches
               </h3>
               <p className="text-gray-700">{formatLabel(moveName)}</p>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2 mt-6">
+                Move Type
+              </h3>
+              <TypeBadges className="mt-2" types={[moveType]} />
             </div>
           )}
 
