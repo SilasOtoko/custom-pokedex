@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router';
 import { ref, onValue, set, remove } from 'firebase/database';
-import { onAuthStateChanged } from 'firebase/auth';
 import './css/index.css';
 import Home from './components/Home';
 import Header from './components/Header';
@@ -17,11 +16,12 @@ import OrderConfirmation from './components/OrderConfirmation';
 import jsonData from './pokemonlist';
 import { CartProvider } from './context/CartContext';
 import { ToastProvider } from './context/ToastContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { auth, database } from './firebase.js';
 
-function App() {
+function AppContent() {
+  const { currentUser } = useAuth();
   const [allPokemonData, setAllPokemonData] = useState([]);
-  const [currentUser, setCurrentUser] = useState(undefined); // undefined = still loading
   const [favorites, setFavorites] = useState({});
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isNotifyOpen, setIsNotifyOpen] = useState(false);
@@ -33,13 +33,6 @@ function App() {
       id: index + 1,
     }));
     setAllPokemonData(data);
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-    return unsubscribe;
   }, []);
 
   useEffect(() => {
@@ -89,69 +82,76 @@ function App() {
   };
 
   return (
+    <>
+      <Header
+        currentUser={currentUser}
+        onCartOpen={() => setIsCartOpen(true)}
+      />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/shop/:itemName" element={<ItemDetail />} />
+        <Route
+          path="/pokedex"
+          element={
+            <PokemonList
+              allPokemon={allPokemonData}
+              currentUser={currentUser}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+            />
+          }
+        />
+        <Route
+          path="/pokemon/:id"
+          element={
+            <PokemonDetails
+              allPokemon={allPokemonData}
+              currentUser={currentUser}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+            />
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Profile
+              currentUser={currentUser}
+              allPokemon={allPokemonData}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+              orders={orders}
+            />
+          }
+        />
+        <Route
+          path="/checkout"
+          element={<Checkout />}
+          currentUser={currentUser}
+        />
+        <Route
+          path="/order-confirmation"
+          element={<OrderConfirmation />}
+          currentUser={currentUser}
+        />
+      </Routes>
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <ToastContainer />
+    </>
+  );
+}
+
+function App() {
+  return (
     <div className="flex flex-col min-h-screen bg-gray-200">
-      <ToastProvider>
-        <CartProvider>
-          <Header
-            currentUser={currentUser}
-            onCartOpen={() => setIsCartOpen(true)}
-          />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/shop/:itemName" element={<ItemDetail />} />
-            <Route
-              path="/pokedex"
-              element={
-                <PokemonList
-                  allPokemon={allPokemonData}
-                  currentUser={currentUser}
-                  favorites={favorites}
-                  toggleFavorite={toggleFavorite}
-                />
-              }
-            />
-            <Route
-              path="/pokemon/:id"
-              element={
-                <PokemonDetails
-                  allPokemon={allPokemonData}
-                  currentUser={currentUser}
-                  favorites={favorites}
-                  toggleFavorite={toggleFavorite}
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <Profile
-                  currentUser={currentUser}
-                  allPokemon={allPokemonData}
-                  favorites={favorites}
-                  toggleFavorite={toggleFavorite}
-                  orders={orders}
-                />
-              }
-            />
-            <Route
-              path="/checkout"
-              element={<Checkout />}
-              currentUser={currentUser}
-            />
-            <Route
-              path="/order-confirmation"
-              element={<OrderConfirmation />}
-              currentUser={currentUser}
-            />
-          </Routes>
-          <CartDrawer
-            isOpen={isCartOpen}
-            onClose={() => setIsCartOpen(false)}
-          />
-          <ToastContainer />
-        </CartProvider>
-      </ToastProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <CartProvider>
+            <AppContent />
+          </CartProvider>
+        </ToastProvider>
+      </AuthProvider>
     </div>
   );
 }

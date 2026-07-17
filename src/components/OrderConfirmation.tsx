@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router';
 import { useCart } from '../context/CartContext';
 import { getEnglishEntry } from '../helpers';
 import OrderSummary from './OrderSummary';
+import { ref, update, increment } from 'firebase/database';
+import { database } from '../firebase.js';
+import { useAuth } from '../context/AuthContext';
 
 function OrderConfirmation({ order }) {
   const location = useLocation();
+  const items = location.state?.order?.items;
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    if (!currentUser || !items) return;
+    if (currentUser && items) {
+      items.forEach((entry) =>
+        update(ref(database, `users/${currentUser.uid}/inventory`), {
+          [entry.item.name]: increment(entry.quantity),
+        }),
+      );
+    }
+  }, [currentUser, items]);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 w-full">
@@ -25,7 +41,7 @@ function OrderConfirmation({ order }) {
           <span> {location.state?.order.form.region}</span>
         </p>
       </div>
-      <OrderSummary cart={location.state?.order.items} />
+      <OrderSummary cart={items} />
       <div className="flex justify-start">
         <Link
           to="/shop"
