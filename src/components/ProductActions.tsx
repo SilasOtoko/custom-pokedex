@@ -1,6 +1,7 @@
 import NotifyMe from './NotifyMe';
+import SpecialOrder from './SpecialOrder';
 import QuantityControls from './QuantityControls';
-import { UNAVAILABLE_ITEMS } from '../shopCategories';
+import { UNAVAILABLE_ITEMS, SPECIAL_ORDER_ITEMS } from '../shopCategories';
 import { useCart } from '../context/CartContext';
 import { useAddToCart } from '../hooks/useAddToCart';
 
@@ -8,6 +9,7 @@ function ProductActions({ item, className }) {
   const { cart } = useCart();
   const handleAddToCart = useAddToCart(item);
   const isUnavailable = UNAVAILABLE_ITEMS.includes(item?.name);
+  const isSpecialOrder = SPECIAL_ORDER_ITEMS.includes(item?.name);
   const entry = cart.find((e) => e.item.name === item?.name);
   const inCart = entry !== undefined;
 
@@ -15,6 +17,8 @@ function ProductActions({ item, className }) {
     <div className={className}>
       {isUnavailable ? (
         <NotifyMe itemName={item.name} />
+      ) : isSpecialOrder ? (
+        <SpecialOrder itemName={item.name} />
       ) : inCart ? (
         <div className="bg-gray-50 rounded-md p-2">
           <QuantityControls item={item}>

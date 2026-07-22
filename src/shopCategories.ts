@@ -272,3 +272,17 @@ export const SHOP_CATEGORIES = [
 ];
 
 export const UNAVAILABLE_ITEMS = ['master-ball'];
+export const SPECIAL_ORDER_ITEMS = [
+  'safari-ball',
+  'park-ball',
+  'cherish-ball',
+  'dream-ball',
+  'beast-ball',
+  'lure-ball',
+  'level-ball',
+  'moon-ball',
+  'heavy-ball',
+  'fast-ball',
+  'friend-ball',
+  'love-ball',
+];

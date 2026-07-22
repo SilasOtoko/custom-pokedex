@@ -13,6 +13,8 @@ import CartDrawer from './components/CartDrawer';
 import ToastContainer from './components/ToastContainer';
 import Checkout from './components/Checkout';
 import OrderConfirmation from './components/OrderConfirmation';
+import Expeditions from './components/Expeditions';
+import Login from './components/Login';
 import jsonData from './pokemonlist';
 import { CartProvider } from './context/CartContext';
 import { ToastProvider } from './context/ToastContext';
@@ -135,6 +137,8 @@ function AppContent() {
           element={<OrderConfirmation />}
           currentUser={currentUser}
         />
+        <Route path="/expeditions" element={<Expeditions />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       <ToastContainer />

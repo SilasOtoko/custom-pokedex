@@ -36,13 +36,13 @@ function Home() {
         <div className="flex flex-wrap gap-3 justify-center">
           <Link
             to="/shop"
-            className="px-6 py-3 bg-amber-400 text-stone-900 font-semibold rounded-md hover:bg-amber-300 transition-colors duration-200"
+            className="px-6 py-3 bg-amber-400 text-stone-900 rounded-md hover:bg-amber-300 transition-colors duration-200"
           >
             Shop Now
           </Link>
           <Link
             to="/pokedex"
-            className="px-6 py-3 border border-stone-400 text-stone-200 font-semibold rounded-md hover:bg-white/10 transition-colors duration-200"
+            className="px-6 py-3 border border-stone-400 text-stone-200 rounded-md hover:bg-white/10 transition-colors duration-200"
           >
             Browse Pokédex
           </Link>
