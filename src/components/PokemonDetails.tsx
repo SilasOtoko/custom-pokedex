@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { pad } from '../helpers';
+import { pad, getPokemonIconUrl } from '../helpers';
 import { TYPE_COLORS } from '../pokemonTypes';
 import PokemonDescription from './PokemonDescription';
 import EvolutionChain from './EvolutionChain';
 import TypeBadges from './TypeBadges';
+import FavoriteButton from './FavoriteButton';
 import pokeballSvg from '../images/pokeball.svg';
 import {
   RadarChart,
@@ -160,29 +161,15 @@ function PokemonDetails({
                 src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${paddedId}.png`}
                 alt={pokemon.name}
                 className="w-48 h-48 object-contain drop-shadow-lg"
+                width="192"
+                height="192"
               />
               {currentUser && (
-                <button
-                  onClick={() => toggleFavorite(pokemon.name)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-white bg-opacity-70 hover:bg-opacity-100 shadow transition-all"
-                  title={
-                    isFavorited ? 'Remove from favorites' : 'Add to favorites'
-                  }
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill={isFavorited ? '#ef4444' : 'none'}
-                    stroke={isFavorited ? '#ef4444' : '#9ca3af'}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                  </svg>
-                </button>
+                <FavoriteButton
+                  pokemon={pokemon}
+                  favorites={favorites}
+                  toggleFavorite={toggleFavorite}
+                />
               )}
             </div>
           )}

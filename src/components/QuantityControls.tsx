@@ -21,7 +21,7 @@ function QuantityControls({ item, className = '', children }) {
           onClick={() =>
             dispatch({
               type: 'REMOVE_ITEM',
-              payload: entry.item,
+              payload: entry.item.name,
             })
           }
         >
@@ -41,7 +41,7 @@ function QuantityControls({ item, className = '', children }) {
           onClick={() =>
             dispatch({
               type: 'DECREMENT_ITEM',
-              payload: entry.item,
+              payload: entry.item.name,
             })
           }
         >
@@ -59,7 +59,7 @@ function QuantityControls({ item, className = '', children }) {
         type="button"
         aria-label={`Increase quantity of ${name}`}
         className="w-6 h-6 bg-sky-800 flex items-center justify-center text-white rounded-md hover:cursor-pointer hover:scale-115 hover:bg-sky-900 duration-200 transition"
-        onClick={() => dispatch({ type: 'ADD_ITEM', payload: entry.item })}
+        onClick={() => dispatch({ type: 'ADD_ITEM', payload: entry.item.name })}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
