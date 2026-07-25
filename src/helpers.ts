@@ -10,6 +10,10 @@ const SPRITE_OVERRIDES = {
   'pewter-crunchies':
     'https://www.serebii.net/itemdex/sprites/pewtercrunchies.png',
   'kings-rock': `https://www.serebii.net/itemdex/sprites/sv/king'srock.png`,
+  'pass-orb': `https://archives.bulbagarden.net/media/upload/thumb/6/6a/Dream_Pass_Orb_Sprite.png/200px-Dream_Pass_Orb_Sprite.png`,
+  'heavy-duty-boots': `https://archives.bulbagarden.net/media/upload/9/9b/Bag_Heavy-Duty_Boots_SV_Sprite.png`,
+  'never-melt-ice': `https://archives.bulbagarden.net/media/upload/4/4e/Dream_Never-Melt_Ice_Sprite.png`,
+  'hopo-berry': `https://archives.bulbagarden.net/media/upload/6/6b/Bag_Hopo_Berry_LA_Sprite.png`,
 };
 
 export function pad(number, length) {
@@ -65,4 +69,8 @@ export function getItemSpriteUrl(name: string, moveType?: string): string {
   }
 
   return `https://www.serebii.net/itemdex/sprites/sv/${formatSpriteName(name)}.png`;
+}
+
+export function getPokemonIconUrl(id: number): number {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${id}.png`;
 }

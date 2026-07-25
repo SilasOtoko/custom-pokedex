@@ -30,10 +30,10 @@ function ProductCard({ name, item, selectedCategory }) {
   }, [item]);
 
   return (
-    <Card>
+    <Card className="h-full">
       {loading && !item && <LoadingSpinner />}
       {!loading && item && (
-        <div className="relative">
+        <div className="relative h-full flex flex-col">
           <Link
             to={`/shop/${item.name}`}
             className="absolute inset-0 z-0"
@@ -52,7 +52,7 @@ function ProductCard({ name, item, selectedCategory }) {
             </h3>
             <p>Cost: ₽{item.cost}</p>
           </div>
-          <div className="relative z-10 px-4 pb-6">
+          <div className="relative z-10 px-4 pb-6 mt-auto">
             <ProductActions item={item} className="mt-4" />
           </div>
         </div>

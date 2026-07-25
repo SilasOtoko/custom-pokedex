@@ -6,11 +6,11 @@ function cartReducer(state, action) {
   switch (action.type) {
     case 'ADD_ITEM': {
       const existing = state.find(
-        (entry) => entry.item.name === action.payload.name,
+        (entry) => entry.item.name === action.payload,
       );
       if (existing) {
         return state.map((entry) =>
-          entry.item.name === action.payload.name
+          entry.item.name === action.payload
             ? { ...entry, quantity: entry.quantity + 1 }
             : entry,
         );
@@ -21,13 +21,13 @@ function cartReducer(state, action) {
 
     case 'DECREMENT_ITEM': {
       const existing = state.find(
-        (entry) => entry.item.name === action.payload.name,
+        (entry) => entry.item.name === action.payload,
       );
       if (existing.quantity === 1) {
-        return state.filter((entry) => entry.item.name !== action.payload.name);
+        return state.filter((entry) => entry.item.name !== action.payload);
       } else {
         return state.map((entry) =>
-          entry.item.name === action.payload.name
+          entry.item.name === action.payload
             ? { ...entry, quantity: entry.quantity - 1 }
             : entry,
         );
