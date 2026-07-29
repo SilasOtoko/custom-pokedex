@@ -1,12 +1,17 @@
 import React, { useRef } from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-function FavoriteButton({ pokemon, favorites, toggleFavorite }) {
+function FavoriteButton({
+  pokemon,
+  favorites,
+  toggleFavorite,
+  className = '',
+}) {
   const isFavorited = favorites && favorites[pokemon.name];
   const dotLottieRef = useRef(null);
 
   return (
-    <div className="absolute top-3 right-3">
+    <div className={`${className}`}>
       <button
         onClick={() => {
           if (!isFavorited) dotLottieRef.current?.play();
