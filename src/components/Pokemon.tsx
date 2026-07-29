@@ -10,10 +10,10 @@ function Pokemon({ pokemon, id, currentUser, favorites, toggleFavorite }) {
   const types = POKEMON_TYPES[pokemon.name] || [];
 
   return (
-    <div className="relative">
+    <div className="relative group transform-gpu will-change-transform transition duration-200 hover:scale-105 hover:shadow-md">
       <Link
         to={{ pathname: `/pokemon/${id}`, state: { pokemon } }}
-        className="block bg-white rounded-md shadow hover:shadow-md p-4 pt-10 hover:scale-105 transition duration-200 transform-gpu will-change-transform outline outline-transparent hover:outline-gray-400 h-full"
+        className="block bg-white rounded-md shadow p-4 pt-10 transition duration-200 outline outline-transparent hover:outline-gray-400 h-full"
       >
         <div className="text-xs absolute top-0 left-0 right-0 mx-auto bg-gray-500 text-white p-1.5 w-25 text-center mb-1 rounded-b-md">
           #{paddedId}
@@ -30,12 +30,12 @@ function Pokemon({ pokemon, id, currentUser, favorites, toggleFavorite }) {
         </h3>
         <TypeBadges types={types} />
       </Link>
-
       {currentUser && (
         <FavoriteButton
           pokemon={pokemon}
           favorites={favorites}
           toggleFavorite={toggleFavorite}
+          className="absolute top-3 right-3"
         />
       )}
     </div>
