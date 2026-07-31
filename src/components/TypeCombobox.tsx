@@ -3,7 +3,13 @@ import { ALL_TYPES, TYPE_COLORS } from '../pokemonTypes';
 import Label from './form/Label';
 import TypeBadge from './TypeBadge';
 
-function TypeCombobox({ selectedTypes, onChange, className = '' }) {
+interface Props {
+  selectedTypes: string[];
+  onChange: (types: string[]) => void;
+  className?: string;
+}
+
+function TypeCombobox({ selectedTypes, onChange, className = '' }: Props) {
   const [inputValue, setInputValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);

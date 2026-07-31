@@ -1,12 +1,20 @@
 import React, { useRef } from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { PokemonListItem } from '../types';
+
+interface Props {
+  pokemon: PokemonListItem;
+  favorites: Record<string, boolean>;
+  toggleFavorite: (name: string) => void;
+  className?: string;
+}
 
 function FavoriteButton({
   pokemon,
   favorites,
   toggleFavorite,
   className = '',
-}) {
+}: Props) {
   const isFavorited = favorites && favorites[pokemon.name];
   const dotLottieRef = useRef(null);
 

@@ -4,7 +4,11 @@ import { get, ref } from 'firebase/database';
 import { auth, database } from '../firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
-function SpecialOrder({ itemName }) {
+interface Props {
+  itemName: string;
+}
+
+function SpecialOrder({ itemName }: Props) {
   const [isSpecialOrderOpen, setIsSpecialOrderOpen] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
 

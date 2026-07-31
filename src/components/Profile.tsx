@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useAuth } from '../context/AuthContext';
 import { auth } from '../firebase.js';
 import { signOut } from 'firebase/auth';
 import { getEnglishEntry } from '../helpers';
 import Pokemon from './Pokemon';
 import ProfileImage from './ProfileImage';
+import { PokemonListItem, Order } from '../types';
 
-function Profile({
-  currentUser,
-  allPokemon,
-  favorites,
-  toggleFavorite,
-  orders,
-}) {
+interface Props {
+  allPokemon: PokemonListItem[];
+  favorites: Record<string, boolean>;
+  toggleFavorite: (name: string) => void;
+  orders: Order[];
+}
+
+function Profile({ allPokemon, favorites, toggleFavorite, orders }: Props) {
+  const { currentUser } = useAuth();
+  useDocumentTitle('Profile');
   const navigate = useNavigate();
 
   const localOrders = JSON.parse(localStorage.getItem('orders') || '[]');
@@ -38,18 +44,20 @@ function Profile({
     : [];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 w-full">
+    <div className="max-w-4xl mx-auto px-4 py-10 md:py-20 w-full">
       {/* User card */}
-      <div className="bg-white rounded-2xl shadow p-6 flex items-center gap-4 mb-8">
-        <ProfileImage
-          user={currentUser}
-          className="w-16 h-16 rounded-full border-2 border-red-400 shrink-0"
-        />
-        <div className="flex-1">
-          <h2 className="text-xl font-bold text-gray-800">
-            {currentUser.displayName}
-          </h2>
-          <p className="text-gray-500 text-sm">{currentUser.email}</p>
+      <div className="bg-white rounded-2xl shadow p-6 flex flex-col xs:flex-row xs:items-center justify-between gap-4 mb-8">
+        <div className="flex gap-4">
+          <ProfileImage
+            user={currentUser}
+            className="w-16 h-16 rounded-full border-2 border-red-400 shrink-0"
+          />
+          <div className="flex-1">
+            <h2 className="text-xl font-bold text-gray-800">
+              {currentUser.displayName}
+            </h2>
+            <p className="text-gray-500 text-sm">{currentUser.email}</p>
+          </div>
         </div>
         <button
           onClick={handleLogout}
@@ -147,13 +155,12 @@ function Profile({
           <p className="text-sm">Tap the ♥ on any Pokémon to save it here.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div className="grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {favoritedPokemon.map((pokemon) => (
             <Pokemon
               key={pokemon.name}
               id={pokemon.id}
               pokemon={pokemon}
-              currentUser={currentUser}
               favorites={favorites}
               toggleFavorite={toggleFavorite}
             />

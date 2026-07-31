@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { auth, googleAuthProvider } from '../firebase.js';
 import { signInWithPopup } from 'firebase/auth';
-import logo from '../images/full-logo.svg';
+import logo from '../images/faded-logo.svg';
 
-function Header({ currentUser, onCartOpen }) {
+interface Props {
+  onCartOpen: () => void;
+}
+
+function Header({ onCartOpen }: Props) {
+  const { currentUser } = useAuth();
   const { cart } = useCart();
   const itemCount = cart.reduce((sum, entry) => sum + entry.quantity, 0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,9 +22,9 @@ function Header({ currentUser, onCartOpen }) {
 
   return (
     <header className="sticky top-0 z-50">
-      <div className="flex justify-between bg-white border-b border-gray-400">
+      <div className="flex justify-between bg-white border-gray-400 shadow">
         {/* Logo */}
-        <div className="flex items-center justify-center transition-colors h-20 border-r border-b border-gray-400 bg-white rounded-br-md p-2.5 -mb-6 md:px-6">
+        <div className="flex items-center justify-center transition-colors h-20 bg-white rounded-br-md p-2.5 md:px-6">
           <Link
             to="/"
             onClick={closeMenu}
@@ -121,7 +127,7 @@ function Header({ currentUser, onCartOpen }) {
                   <span className="hidden sm:inline">Cart</span>
                   {itemCount > 0 && (
                     <span
-                      className="absolute -top-1 -right-2 bg-rose-600 text-white text-xs font-bold rounded-l-[30px] rounded-r-[30px] h-4 flex items-center justify-center px-1"
+                      className="absolute -top-1 -right-2 bg-rose-600 text-white text-xs rounded-l-[30px] rounded-r-[30px] h-4 flex items-center justify-center px-1 min-w-4"
                       aria-hidden="true"
                     >
                       {itemCount}

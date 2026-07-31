@@ -4,7 +4,11 @@ import { get, ref } from 'firebase/database';
 import { auth, database } from '../firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
-function NotifyMe({ itemName }) {
+interface Props {
+  itemName: string;
+}
+
+function NotifyMe({ itemName }: Props) {
   const [isNotifyOpen, setIsNotifyOpen] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
 

@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import { useParams } from 'react-router';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { fetchItemDetail, fetchMachineMove } from '../api/items';
 import { getItemSpriteUrl, getEnglishEntry, formatLabel } from '../helpers';
 import pokeballSvg from '../images/pokeball.svg';
 import ProductActions from './ProductActions';
 import TypeBadges from './TypeBadges';
+import LoadingSpinner from './LoadingSpinner';
 
 function ItemDetail() {
   const { itemName } = useParams();
   const [item, setItem] = useState(null);
+
+  const itemTitle = item
+    ? (getEnglishEntry(item.names)?.name ?? itemName)
+    : itemName;
+  useDocumentTitle(itemTitle);
   const [loading, setLoading] = useState(false);
   const [moveName, setMoveName] = useState(null);
   const [moveType, setMoveType] = useState(null);
@@ -39,41 +47,49 @@ function ItemDetail() {
     .at(-1)?.text;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8 w-full">
-      {/* Sprite hero */}
-      <div className="flex justify-center py-8 relative min-h-48">
-        {item && (
-          <img
-            src={getItemSpriteUrl(itemName)}
-            alt={englishName || itemName}
-            className="w-48 h-48 object-contain drop-shadow-lg"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = item.sprites?.default || '';
-            }}
-          />
-        )}
-        {loading && (
-          <div className="absolute inset-0 flex items-center justify-center">
+    <div className="max-w-2xl mx-auto px-8 py-20 w-full">
+      <div className="bg-blue-50 rounded-t-md p-6">
+        <div className="flex justify-start">
+          <Link
+            to="/shop"
+            className="flex items-center gap-1 px-3 py-2 rounded-md text-sm text-white bg-gray-700 hover:bg-gray-500 disabled:opacity-30 disabled:cursor-not-allowed hover:cursor-pointer duration-300 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Back to Shop
+          </Link>
+        </div>
+        {/* Sprite hero */}
+        <div className="flex justify-center py-8 relative min-h-48">
+          {item && (
             <img
-              src={pokeballSvg}
-              className="w-12 h-12 spinner-pokeball"
-              alt="Loading spinner"
+              src={getItemSpriteUrl(itemName)}
+              alt={englishName || itemName}
+              className="w-48 h-48 object-contain"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = item.sprites?.default || '';
+              }}
             />
-          </div>
-        )}
+          )}
+          {loading && <LoadingSpinner />}
+        </div>
       </div>
 
       {/* Content card */}
       {item && (
-        <div className="p-6 bg-white rounded-md rounded-tl-none relative">
-          {/* Category tab */}
-          <span className="text-xs absolute -top-7 left-0 bg-white p-1.5 w-25 text-center rounded-t-xl font-alt font-bold text-gray-500">
-            {formatLabel(item.category.name)}
-          </span>
-
+        <div className="p-6 bg-white rounded-b-md relative">
           {/* Name */}
-          <h1 className="capitalize text-3xl font-bold text-gray-800 mb-4">
+          <h1 className="capitalize text-3xl font-alt font-bold text-gray-700 mb-4">
             {englishName}
           </h1>
 

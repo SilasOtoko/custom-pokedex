@@ -2,10 +2,20 @@ import React from 'react';
 import { Link } from 'react-router';
 import { pad } from '../helpers';
 import { POKEMON_TYPES, TYPE_COLORS } from '../pokemonTypes';
+import { useAuth } from '../context/AuthContext';
 import TypeBadges from './TypeBadges';
 import FavoriteButton from './FavoriteButton';
+import { PokemonListItem } from '../types';
 
-function Pokemon({ pokemon, id, currentUser, favorites, toggleFavorite }) {
+interface Props {
+  pokemon: PokemonListItem;
+  id: number;
+  favorites: Record<string, boolean>;
+  toggleFavorite: (name: string) => void;
+}
+
+function Pokemon({ pokemon, id, favorites, toggleFavorite }: Props) {
+  const { currentUser } = useAuth();
   const paddedId = pad(id, 3);
   const types = POKEMON_TYPES[pokemon.name] || [];
 
@@ -21,11 +31,11 @@ function Pokemon({ pokemon, id, currentUser, favorites, toggleFavorite }) {
         <img
           src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${paddedId}.png`}
           alt={pokemon.name}
-          className="w-46 h-46 mx-auto object-contain"
+          className="w-36 md:w-46 h-36 md:h-46 mx-auto object-contain"
           width="180"
           height="180"
         />
-        <h3 className="capitalize font-semibold text-gray-800 text-xl mt-1 mb-2">
+        <h3 className="font-alt font-bold capitalize text-gray-800 text-xl mt-1 mb-2">
           {pokemon.name}
         </h3>
         <TypeBadges types={types} />

@@ -11,6 +11,7 @@ import Shop from './components/Shop';
 import ItemDetail from './components/ItemDetail';
 import CartDrawer from './components/CartDrawer';
 import ToastContainer from './components/ToastContainer';
+import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import OrderConfirmation from './components/OrderConfirmation';
 import Expeditions from './components/Expeditions';
@@ -20,6 +21,8 @@ import { CartProvider } from './context/CartContext';
 import { ToastProvider } from './context/ToastContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { auth, database } from './firebase.js';
+import ErrorBoundary from './components/ErrorBoundary';
+import NotFound from './components/NotFound';
 
 function AppContent() {
   const { currentUser } = useAuth();
@@ -85,61 +88,51 @@ function AppContent() {
 
   return (
     <>
-      <Header
-        currentUser={currentUser}
-        onCartOpen={() => setIsCartOpen(true)}
-      />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/shop/:itemName" element={<ItemDetail />} />
-        <Route
-          path="/pokedex"
-          element={
-            <PokemonList
-              allPokemon={allPokemonData}
-              currentUser={currentUser}
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-            />
-          }
-        />
-        <Route
-          path="/pokemon/:id"
-          element={
-            <PokemonDetails
-              allPokemon={allPokemonData}
-              currentUser={currentUser}
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-            />
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <Profile
-              currentUser={currentUser}
-              allPokemon={allPokemonData}
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-              orders={orders}
-            />
-          }
-        />
-        <Route
-          path="/checkout"
-          element={<Checkout />}
-          currentUser={currentUser}
-        />
-        <Route
-          path="/order-confirmation"
-          element={<OrderConfirmation />}
-          currentUser={currentUser}
-        />
-        <Route path="/expeditions" element={<Expeditions />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <Header onCartOpen={() => setIsCartOpen(true)} />
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/:itemName" element={<ItemDetail />} />
+          <Route
+            path="/pokedex"
+            element={
+              <PokemonList
+                allPokemon={allPokemonData}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+              />
+            }
+          />
+          <Route
+            path="/pokemon/:id"
+            element={
+              <PokemonDetails
+                allPokemon={allPokemonData}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                allPokemon={allPokemonData}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+                orders={orders}
+              />
+            }
+          />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order-confirmation" element={<OrderConfirmation />} />
+          <Route path="/expeditions" element={<Expeditions />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ErrorBoundary>
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       <ToastContainer />
     </>

@@ -1,6 +1,12 @@
+import { User } from 'firebase/auth';
 import { useUserAvatar } from '../hooks/useUserAvatar';
 
-function ProfileImage({ user, className }) {
+interface Props {
+  user: User;
+  className?: string;
+}
+
+function ProfileImage({ user, className }: Props) {
   const { showFallback, initial, onError } = useUserAvatar(user);
 
   if (showFallback) {

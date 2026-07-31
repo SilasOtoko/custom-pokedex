@@ -7,8 +7,14 @@ import {
   getItemSpriteUrl,
 } from '../helpers';
 import QuantityControls from './QuantityControls';
+import { CartEntry } from '../types';
 
-function OrderSummary({ cart, showControls = false }) {
+interface Props {
+  cart: CartEntry[];
+  showControls?: boolean;
+}
+
+function OrderSummary({ cart, showControls = false }: Props) {
   const total = cart.reduce(
     (sum, entry) => sum + entry.item.cost * entry.quantity,
     0,

@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { pad } from '../helpers';
+import { PokemonListItem } from '../types';
 
-function flattenChain(chain) {
+interface ChainNode {
+  species: { name: string };
+  evolves_to: ChainNode[];
+}
+
+interface Props {
+  evolutionChainUrl: string;
+  allPokemon: PokemonListItem[];
+}
+
+function flattenChain(chain: ChainNode): string[] {
   const result = [];
   let node = chain;
   while (node) {
@@ -13,7 +24,7 @@ function flattenChain(chain) {
   return result;
 }
 
-function EvolutionChain({ evolutionChainUrl, allPokemon }) {
+function EvolutionChain({ evolutionChainUrl, allPokemon }: Props) {
   const [chain, setChain] = useState([]);
   const [loading, setLoading] = useState(true);
 
