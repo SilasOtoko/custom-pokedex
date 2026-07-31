@@ -5,7 +5,14 @@ import { useToast } from '../context/ToastContext';
 import { formatLabel } from '../helpers';
 import { ITEM_SUPPLEMENTS } from '../itemSupplements';
 
-function SpecialOrderModal({ itemName, isOpen, onClose, onSubscribed }) {
+interface Props {
+  itemName: string;
+  isOpen: boolean;
+  onClose: () => void;
+  onSubscribed: () => void;
+}
+
+function SpecialOrderModal({ itemName, isOpen, onClose, onSubscribed }: Props) {
   const dialogRef = useRef(null);
   const { addToast } = useToast();
   const [email, setEmail] = useState(auth.currentUser?.email || '');

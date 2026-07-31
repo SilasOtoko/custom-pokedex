@@ -1,4 +1,4 @@
-import pokeballSvg from '../images/old-timey-pokeball.svg';
+import pokeballSvg from '../images/faded-pokeball.svg';
 
 function LoadingSpinner() {
   return (

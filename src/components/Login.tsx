@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Navigate, useLocation } from 'react-router';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import {
   signInWithPopup,
   signInWithEmailAndPassword,
@@ -13,9 +14,10 @@ function Login() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  useDocumentTitle(mode === 'signin' ? 'Sign In' : 'Create Account');
   const from = location.state?.from?.pathname || '/expeditions';
 
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -28,8 +30,12 @@ function Login() {
     try {
       await signInWithPopup(auth, googleAuthProvider);
       navigate(from, { replace: true });
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     }
   };
 
@@ -44,8 +50,12 @@ function Login() {
         await createUserWithEmailAndPassword(auth, email, password);
       }
       navigate(from, { replace: true });
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     } finally {
       setLoading(false);
     }

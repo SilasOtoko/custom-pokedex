@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import { SHOP_CATEGORIES } from '../shopCategories';
 import pokeballSvg from '../images/pokeball.svg';
 import Card from './Card';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import bannerImage from '../images/banner-painted.jpg';
 
 const CATEGORY_SPRITES = {
   pokeballs: 'https://www.serebii.net/itemdex/sprites/sv/pokeball.png',
@@ -14,35 +16,38 @@ const CATEGORY_SPRITES = {
 };
 
 function Home() {
+  useDocumentTitle('Home');
+
   return (
     <div className="flex flex-col">
       {/* Hero */}
       <section
-        className="bg-stone-800 text-white px-6 py-24 flex flex-col items-center text-center gap-6 -mt-4"
+        className="bg-stone-800 text-white px-6 py-24 flex flex-col items-center text-center gap-6 -mt-4 bg-no-repeat bg-cover bg-center"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v1H0zM0 13h40v1H0zM0 26h40v1H0z' fill='%23ffffff' fill-opacity='0.04'/%3E%3C/svg%3E")`,
+          backgroundImage: `url(${bannerImage})`,
         }}
       >
-        <div>
-          <h1 className="text-4xl font-bold font-alt mb-3 tracking-wider">
-            Trainer Supply Co.
-          </h1>
-          <p className="text-stone-300 text-lg max-w-md mx-auto font-serif">
+        <div className="pt-14 xl:pt-28">
+          <h1 className="sr-only">Trainer Supply Co.</h1>
+          <p className="text-4xl md:text-5xl xl:text-7xl max-w-2xl xl:max-w-4xl font-bold text-slate-800">
+            Gear up for your next Pokémon adventure
+          </p>
+          {/* <p className="text-stone-300 text-lg max-w-md mx-auto font-serif">
             Everything you need for your next adventure — from Pokéballs to
             battle items, delivered across all regions.
-          </p>
+          </p> */}
         </div>
 
         <div className="flex flex-wrap gap-3 justify-center">
           <Link
             to="/shop"
-            className="px-6 py-3 bg-amber-400 text-stone-900 rounded-md hover:bg-amber-300 transition-colors duration-200"
+            className="px-6 py-3 bg-pokeball-red text-white rounded-md hover:bg-red-800 transition duration-300 outline-2 outline-transparent hover:outline-gray-400"
           >
             Shop Now
           </Link>
           <Link
             to="/pokedex"
-            className="px-6 py-3 border border-stone-400 text-stone-200 rounded-md hover:bg-white/10 transition-colors duration-200"
+            className="px-6 py-3 text-slate-800 rounded-md bg-white hover:bg-gray-100 outline-2 outline-transparent hover:outline-gray-400 transition duration-300 shadow hover:shadow-md"
           >
             Browse Pokédex
           </Link>
@@ -90,12 +95,12 @@ function Home() {
 
       {/* Categories */}
       <section className="max-w-4xl mx-auto w-full px-6 py-16">
-        <h2 className="text-2xl font-bold font-alt text-stone-700 mb-2 text-center tracking-wider">
+        <h2 className="text-2xl font-bold font-alt text-stone-700 mb-8 text-center">
           Shop by Category
         </h2>
-        <p className="text-center text-stone-600 mb-8 font-serif italic">
+        {/* <p className="text-center text-stone-600 mb-8 font-sans">
           Stock up before your next adventure
-        </p>
+        </p> */}
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {SHOP_CATEGORIES.map((category) => (
@@ -110,7 +115,7 @@ function Home() {
                   aria-hidden="true"
                   className="w-30 h-30 object-contain group-hover:scale-110 transition-transform duration-200 mx-auto"
                 />
-                <span className="text-md text-center font-bold text-stone-800 uppercase tracking-widest font-alt block mt-3">
+                <span className="text-md text-center font-bold text-stone-800 font-alt block mt-3">
                   {category.label}
                 </span>
                 <Link

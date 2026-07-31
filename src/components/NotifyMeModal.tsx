@@ -3,7 +3,14 @@ import { ref, set } from 'firebase/database';
 import { database, auth } from '../firebase';
 import { useToast } from '../context/ToastContext';
 
-function NotifyMeModal({ itemName, isOpen, onClose, onSubscribed }) {
+interface Props {
+  itemName: string;
+  isOpen: boolean;
+  onClose: () => void;
+  onSubscribed: () => void;
+}
+
+function NotifyMeModal({ itemName, isOpen, onClose, onSubscribed }: Props) {
   const dialogRef = useRef(null);
   const { addToast } = useToast();
   const [email, setEmail] = useState(auth.currentUser?.email || '');

@@ -1,7 +1,14 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
+import { PokeApiItem } from '../types';
 
-function QuantityControls({ item, className = '', children }) {
+interface Props {
+  item: PokeApiItem;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+function QuantityControls({ item, className = '', children }: Props) {
   const { cart, dispatch } = useCart();
   const entry = cart.find((e) => e.item.name === item?.name);
 

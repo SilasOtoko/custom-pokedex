@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, Navigate } from 'react-router';
 import { database } from '../firebase';
-import { ref, push } from 'firebase/database';
+import { ref, push, get } from 'firebase/database';
 import { useCart } from '../context/CartContext';
-import { getEnglishEntry } from '../helpers';
+import { useAuth } from '../context/AuthContext';
 import OrderSummary from '../components/OrderSummary';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import Label from './form/Label';
+import Input from './form/Input';
 
 const REGIONS = [
   'Kanto',
@@ -18,17 +21,36 @@ const REGIONS = [
   'Paldea',
 ];
 
-function Checkout({ currentUser }) {
+function Checkout() {
+  useDocumentTitle('Checkout');
+  const { currentUser } = useAuth();
+
   const { cart, dispatch } = useCart();
+  const hasSubmitted = useRef(false);
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    name: '',
-    email: '',
+    name: currentUser?.displayName || currentUser?.email || '',
+    email: currentUser?.email || '',
     region: '',
     city: '',
     address: '',
   });
+
+  useEffect(() => {
+    if (!currentUser) return;
+    get(ref(database, `users/${currentUser.uid}/profile`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        const profile = snapshot.val();
+        setForm((prev) => ({
+          ...prev,
+          region: profile.region || prev.region,
+          city: profile.city || prev.city,
+          address: profile.address || prev.address,
+        }));
+      }
+    });
+  }, [currentUser]);
 
   const total = cart.reduce(
     (sum, entry) => sum + entry.item.cost * entry.quantity,
@@ -51,6 +73,8 @@ function Checkout({ currentUser }) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    hasSubmitted.current = true;
+
     if (currentUser) {
       push(ref(database, `users/${currentUser.uid}/orders`), order);
     } else {
@@ -62,16 +86,12 @@ function Checkout({ currentUser }) {
     navigate('/order-confirmation', { state: { order } });
   }
 
-  if (cart.length === 0) {
-    return (
-      <div className="max-w-2xl mx-auto px-4 py-16 text-center">
-        <p className="text-gray-500 text-lg">Your cart is empty.</p>
-      </div>
-    );
+  if (cart.length === 0 && !hasSubmitted.current) {
+    return <Navigate to="/cart" replace />;
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 w-full">
+    <div className="max-w-4xl mx-auto px-8 py-20 w-full">
       <h1 className="text-2xl font-bold text-gray-800 mb-8">Checkout</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Form */}
@@ -80,26 +100,26 @@ function Checkout({ currentUser }) {
             Trainer Details
           </h2>
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm text-gray-600" htmlFor="name">
+          <div className="flex flex-col">
+            <Label className="text-sm text-gray-600" htmlFor="name">
               Full Name
-            </label>
-            <input
+            </Label>
+            <Input
               id="name"
               name="name"
               type="text"
               required
               value={form.name}
               onChange={handleChange}
-              className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
+              className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white"
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm text-gray-600" htmlFor="email">
+          <div className="flex flex-col">
+            <Label className="text-sm text-gray-600" htmlFor="email">
               Email
-            </label>
-            <input
+            </Label>
+            <Input
               id="email"
               name="email"
               type="email"
@@ -110,10 +130,10 @@ function Checkout({ currentUser }) {
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm text-gray-600" htmlFor="region">
+          <div className="flex flex-col">
+            <Label className="text-sm text-gray-600" htmlFor="region">
               Region
-            </label>
+            </Label>
             <select
               id="region"
               name="region"
@@ -131,11 +151,11 @@ function Checkout({ currentUser }) {
             </select>
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm text-gray-600" htmlFor="city">
+          <div className="flex flex-col">
+            <Label className="text-sm text-gray-600" htmlFor="city">
               City / Town
-            </label>
-            <input
+            </Label>
+            <Input
               id="city"
               name="city"
               type="text"
@@ -146,11 +166,11 @@ function Checkout({ currentUser }) {
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm text-gray-600" htmlFor="address">
+          <div className="flex flex-col">
+            <Label className="text-sm text-gray-600" htmlFor="address">
               Address
-            </label>
-            <input
+            </Label>
+            <Input
               id="address"
               name="address"
               type="text"

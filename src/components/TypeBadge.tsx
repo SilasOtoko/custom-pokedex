@@ -1,7 +1,12 @@
 import React from 'react';
 import { POKEMON_TYPES, TYPE_COLORS } from '../pokemonTypes';
 
-function TypeBadge({ type, children }) {
+interface Props {
+  type: string;
+  children?: React.ReactNode;
+}
+
+function TypeBadge({ type, children }: Props) {
   const colors = TYPE_COLORS[type] || { bg: 'bg-gray-400', text: 'text-white' };
   return (
     <div className='flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md'>

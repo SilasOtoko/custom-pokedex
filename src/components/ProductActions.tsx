@@ -4,8 +4,14 @@ import QuantityControls from './QuantityControls';
 import { UNAVAILABLE_ITEMS, SPECIAL_ORDER_ITEMS } from '../shopCategories';
 import { useCart } from '../context/CartContext';
 import { useAddToCart } from '../hooks/useAddToCart';
+import { PokeApiItem } from '../types';
 
-function ProductActions({ item, className }) {
+interface Props {
+  item: PokeApiItem;
+  className?: string;
+}
+
+function ProductActions({ item, className }: Props) {
   const { cart } = useCart();
   const handleAddToCart = useAddToCart(item);
   const isUnavailable = UNAVAILABLE_ITEMS.includes(item?.name);

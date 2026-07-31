@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useLocation, Link } from 'react-router';
 import { useCart } from '../context/CartContext';
 import { getEnglishEntry } from '../helpers';
@@ -6,8 +7,14 @@ import OrderSummary from './OrderSummary';
 import { ref, update, increment } from 'firebase/database';
 import { database } from '../firebase.js';
 import { useAuth } from '../context/AuthContext';
+import { Order } from '../types';
 
-function OrderConfirmation({ order }) {
+interface Props {
+  order?: Order;
+}
+
+function OrderConfirmation({ order }: Props) {
+  useDocumentTitle('Order Confirmed');
   const location = useLocation();
   const items = location.state?.order?.items;
   const { currentUser } = useAuth();

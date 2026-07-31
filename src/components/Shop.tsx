@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import {
   SHOP_CATEGORIES,
   UNAVAILABLE_ITEMS,
@@ -10,6 +11,7 @@ import ProductCard from './ProductCard';
 import LoadingSpinner from './LoadingSpinner';
 
 function Shop() {
+  useDocumentTitle('Shop');
   const [searchParams] = useSearchParams();
   const initialCategory =
     SHOP_CATEGORIES.find((c) => c.id === searchParams.get('category')) ||
@@ -52,7 +54,7 @@ function Shop() {
   );
 
   return (
-    <div className="max-w-6xl mx-auto p-8 w-full">
+    <div className="max-w-6xl mx-auto px-8 py-10 md:py-20 w-full">
       <div
         role="tablist"
         aria-label="Shop categories"
@@ -76,10 +78,10 @@ function Shop() {
         ))}
       </div>
       <div className="relative">
-        <h1 className="text-3xl text-center text-gray-700 mb-6 font-alt">
+        <h1 className="text-3xl text-center text-gray-700 mb-6 font-alt font-bold">
           {selectedCategory.label}
         </h1>
-        <div className="flex items-center gap-2 absolute right-0 top-2">
+        <div className="flex items-center justify-end gap-2 md:absolute right-0 top-2">
           <label htmlFor="sort-options">Sort by: </label>
           <select
             id="sort-options"

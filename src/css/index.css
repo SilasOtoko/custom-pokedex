@@ -2,11 +2,12 @@
 @import "./spinner";
 
 @theme {
-    --font-sans: "Open Sans", sans-serif;
+    --font-sans: "Barlow", sans-serif;
     --font-serif: "Merriweather", serif;
     --font-alt: "Stardos Stencil", var(--font-serif);
     --breakpoint-xxs: 26rem;
     --breakpoint-xs: 30rem;
+    --color-pokeball-red: #a35b5b;
 }
 
 @layer base {

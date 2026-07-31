@@ -1,11 +1,22 @@
 import React, { useState, useMemo } from 'react';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useAuth } from '../context/AuthContext';
 import Pokemon from './Pokemon';
 import { POKEMON_TYPES, TYPE_COLORS } from '../pokemonTypes';
 import Label from './form/Label';
 import TypeCombobox from './TypeCombobox';
-import pokeballSvg from '../images/pokeball.svg';
+import pokeballSvg from '../images/faded-pokeball.svg';
+import { PokemonListItem } from '../types';
 
-function PokemonList({ allPokemon, currentUser, favorites, toggleFavorite }) {
+interface Props {
+  allPokemon: PokemonListItem[];
+  favorites: Record<string, boolean>;
+  toggleFavorite: (name: string) => void;
+}
+
+function PokemonList({ allPokemon, favorites, toggleFavorite }: Props) {
+  const { currentUser } = useAuth();
+  useDocumentTitle('Pokédex');
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTypes, setActiveTypes] = useState([]);
   const [isFavoritesOnly, setIsFavoritesOnly] = useState(false);
@@ -40,8 +51,8 @@ function PokemonList({ allPokemon, currentUser, favorites, toggleFavorite }) {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 w-full">
-      <h1 className="text-3xl text-center text-gray-700 mb-6 font-serif">
+    <div className="max-w-6xl mx-auto px-8 py-10 md:py-20 w-full">
+      <h1 className="text-3xl text-center text-gray-700 mb-6 font-alt font-bold">
         Kanto Pokédex
       </h1>
 
@@ -63,25 +74,28 @@ function PokemonList({ allPokemon, currentUser, favorites, toggleFavorite }) {
           <TypeCombobox selectedTypes={activeTypes} onChange={setActiveTypes} />
         </div>
 
-        <div>
+        {/* <div>
           <button
             type="button"
             className="px-6 py-2 border border-gray-800 bg-gray-200 rounded-md transition-colors hover:cursor-pointer hover:bg-gray-700 hover:text-white duration-200"
             onClick={() => setIsFavoritesOnly((prev) => !prev)}
           >
-            Show Favorites Only
+            {isFavoritesOnly ? (
+              <span>Showing Favorites</span>
+            ) : (
+              <span>Show Favorites Only</span>
+            )}
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Grid */}
-      <div className="grid xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-8">
+      <div className="grid xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-12">
         {filteredPokemon.map((pokemon) => (
           <Pokemon
             key={pokemon.name}
             id={pokemon.id}
             pokemon={pokemon}
-            currentUser={currentUser}
             favorites={favorites}
             toggleFavorite={toggleFavorite}
           />

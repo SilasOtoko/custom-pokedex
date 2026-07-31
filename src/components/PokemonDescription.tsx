@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-function PokemonDescription({ pokemon }) {
+interface Props {
+  pokemon: string;
+}
+
+function PokemonDescription({ pokemon }: Props) {
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(true);
 

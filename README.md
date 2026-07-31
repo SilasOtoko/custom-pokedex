@@ -2,7 +2,7 @@
 
 A full-stack Pokémon web app built with React and Firebase. Browse all 151 Kanto Pokémon, manage a shop cart, track your inventory, and prepare for expeditions — all backed by real-time data from [PokéAPI](https://pokeapi.co).
 
-**[Live Demo →](https://josiahs-pokedex.netlify.app/)** _(replace with your Netlify URL)_
+**[Live Demo →](https://josiahs-pokedex.netlify.app/)** _(https://josiahs-pokedex.netlify.app)_
 
 ---
 
@@ -57,7 +57,7 @@ A full-stack Pokémon web app built with React and Firebase. Browse all 151 Kant
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/custom-pokedex.git
+git clone https://github.com/SilasOtoko/custom-pokedex
 cd custom-pokedex
 
 # Install dependencies

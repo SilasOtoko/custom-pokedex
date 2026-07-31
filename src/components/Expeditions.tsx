@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { database } from '../firebase.js';
 import ProfileImage from './ProfileImage';
 import { getItemSpriteUrl } from '../helpers';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 function SectionCard({
   title,
@@ -13,6 +14,8 @@ function SectionCard({
   title: string;
   children: React.ReactNode;
 }) {
+  useDocumentTitle('Expeditions');
+
   return (
     <div className="bg-white rounded-2xl shadow p-6 flex flex-col gap-4">
       <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-400">
